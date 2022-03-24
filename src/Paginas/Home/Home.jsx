@@ -1,8 +1,9 @@
 import React from "react";
-import Navbar from "../../Componentes/Navbar/Navbar";
+import Navbar from "./../../Componentes/Navbar/Navbar"
 import LogoMoviePop from "./../../Imagenes/logo-movie-pop.svg";
 import "./Home.css";
 const Home = () => {
+  
   return (
     <div>
       <Navbar />

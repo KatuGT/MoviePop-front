@@ -2,7 +2,15 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 10px;
+}
+
+nav .link{
+    color: #fff;
+    text-decoration: none;
+}
+
+nav .link.active{
+    color:#C48900;
 }
 
 .wrapper-login,
@@ -16,6 +24,6 @@ nav{
 }
 
 .wrapper-home{
-    font-size: 1.6em;
+    font-size: 1.8em;
     gap: 15px;
 }

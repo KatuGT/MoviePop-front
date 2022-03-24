@@ -1,0 +1,26 @@
+.card-pelicula {
+  height: 100%;
+  aspect-ratio: 1/1.1;
+}
+
+.card-pelicula .imagen-pelicula {
+  width: 100%;
+  height: 85%;
+  object-fit: cover;
+}
+
+.card-pelicula .titulo-pelicula {
+  color: #fff;
+  text-align: right;
+}
+
+@media screen and (min-width: 500px) {
+
+    .card-pelicula .imagen-pelicula{
+        height: 90%;
+    }
+
+    .card-pelicula .titulo-pelicula{
+        font-size: 1.2em;
+    }
+  }

@@ -1,0 +1,70 @@
+.contenedor-peliculas {
+  width: 100%;
+}
+
+.contenedor-buscador {
+  padding: 0 10px;
+}
+
+.buscador-peliculas {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  margin: 2em auto;
+  padding: 15px;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.buscador-peliculas:focus-visible {
+  border: 1px solid #c48900;
+  outline: none;
+}
+
+.buscador-peliculas::placeholder {
+  opacity: 1;
+  color: #fff;
+}
+
+.encabezado-peliculas {
+  color: #fff;
+  margin: 0px 40px 25px 40px;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.separador {
+  margin: 0 auto;
+  width: 100%;
+  border-top-width: 0.5px;
+  border-top-color: rgba(185, 185, 185, 0.2);
+  border-top-style: solid;
+}
+
+.contenedor-card{
+  margin-top: 2em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+
+@media screen and (min-width: 800px) {
+  .contenedor-card{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+
+@media screen and (min-width: 1200px) {
+  .contenedor-card{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .contenedor-card{
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
