@@ -1,0 +1,19 @@
+.contenedor-logo {
+  margin: 5em 0;
+  height: 100%;
+}
+
+figure.logo {
+  color: #c48900;
+  text-align: center;
+  width: min(90%, 500px);
+  margin: 0 auto;
+}
+
+figure.logo h2 {
+  font-size: clamp(5em, 4em, 3em);
+  margin-top: 5px;
+}
+
+@media screen and (max: 715px) {
+}

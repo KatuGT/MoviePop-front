@@ -1,0 +1,21 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 10px;
+}
+
+.wrapper-login,
+.wrapper-home{
+    display: flex;
+    color: #fff;
+}
+
+.wrapper-login{
+    gap: 15px;
+}
+
+.wrapper-home{
+    font-size: 1.6em;
+    gap: 15px;
+}
