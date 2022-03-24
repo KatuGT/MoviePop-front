@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Paginas/Home/Home.jsx"
 import Login from "./Paginas/Login/Login.jsx";
+import PeliDetalle from "./Paginas/Pelicula-detalle/PeliDetalle.jsx";
 import Peliculas from "./Paginas/Peliculas/Peliculas.jsx"
 import Registro from "./Paginas/Registro/Registro.jsx";
 
@@ -13,6 +14,7 @@ function App() {
           <Route path="peliculas" element={<Peliculas/>}/>
           <Route path="login" element={<Login/>}/>
           <Route path="singin" element={<Registro/>}/>
+          <Route path="detalle" element={<PeliDetalle/>}/>
         </Routes>
       </Router>
     </div>

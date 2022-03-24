@@ -4,10 +4,6 @@ nav{
     align-items: center;
 }
 
-nav .link{
-    color: #fff;
-    text-decoration: none;
-}
 
 nav .link.active{
     color:#C48900;
@@ -24,6 +20,6 @@ nav .link.active{
 }
 
 .wrapper-home{
-    font-size: 1.8em;
+    font-size: 2em;
     gap: 15px;
 }

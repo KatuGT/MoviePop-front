@@ -1,0 +1,59 @@
+.contenedor-peli-detalle{
+    width: 100%;
+}
+
+.flecha .fa-arrow-left {
+    color: #fff;
+    width: 100%;
+    font-size: 2em;
+    text-align: right;
+}
+.contenedor-peli-detalle figure{
+    margin-top: 1.5em;
+}
+.imagen-pelicula-detalle{
+    max-width: 100%;
+    aspect-ratio: 1/1.125;
+    object-fit: cover;
+}
+
+.titulo-peli-detalle{
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.3em;
+    color: #fff;
+    margin-top: 1em;
+}
+
+.dato{
+    display: flex;
+    color: #fff;
+    font-size: 14px;
+}
+
+.item{
+    font-weight: 700;
+    margin-right: 0.5em;
+}
+.sinopsis-texto{
+    color: #fff;
+    margin-top: 1.5em;
+    font-size: 14px;
+}
+
+
+@media screen and (min-width: 1000px) {
+    .contenedor-peli-detalle{
+        margin-top: 1em;
+        display: flex;
+        gap: 10px;
+    }
+
+    .titulo-peli-detalle{
+        text-align: left;
+    }
+
+    .sinopsis-texto{
+        margin-top:0 ;
+    }
+}
