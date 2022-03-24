@@ -9,7 +9,7 @@ const Home = () => {
       <Navbar />
       <div className="contenedor-logo">
         <figure className="logo">
-          <img src={LogoMoviePop} alt="logo" />
+          <img src={LogoMoviePop} alt="logo MoviePop!" />
         </figure>
       </div>
     </div>

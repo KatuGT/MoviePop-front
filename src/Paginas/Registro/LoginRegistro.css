@@ -1,0 +1,97 @@
+.contenedor-registro {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3em;
+}
+
+.titulo-formulario {
+  color: #fff;
+  font-size: 3em;
+}
+
+.formulario-registro {
+  background-color: #486a88;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formulario-registro > div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5em;
+  width: 100%;
+}
+
+.formulario-registro > div input {
+  border-radius: 12px;
+  border: none;
+  padding: 10px;
+}
+
+.formulario-registro > div label {
+  font-weight: 800;
+  color: #fff;
+}
+
+.formulario-registro > div input:focus-visible {
+  border: 1px solid #c48900;
+  outline: none;
+}
+
+.logo-registro {
+  margin-top: 2em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.logo-registro img {
+  width: 35%;
+}
+
+.registrado {
+  margin-top: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.registrado .link {
+  text-decoration: underline;
+}
+
+@media screen and (min-width: 800px) {
+  .contenedor-registro {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  
+  .contenedor-formulario-registro {
+    flex: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .formulario-registro {
+    width: 50%;
+  }
+  .logo-registro {
+    flex: 1;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  .logo-registro {
+    width: 100%;
+  }
+
+  .logo-registro img{
+      width: 90%;
+  }
+}

@@ -20,3 +20,9 @@ padding: 40px 20px;
     text-decoration: none;
 }
 
+.boton-enviar{
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    width: 100px;
+}

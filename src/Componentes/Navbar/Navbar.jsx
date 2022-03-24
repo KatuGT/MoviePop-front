@@ -7,10 +7,10 @@ const Navbar = () => {
     <>
       <nav>
         <div className="wrapper-login">
-          <NavLink to="/singin" className="registro link">
+          <NavLink to="/rl/registro" className="registro link">
             Registrate
           </NavLink>
-          <NavLink to="/login" className="login link">
+          <NavLink to="/rl/login" className="login link">
             Inicia sesión
           </NavLink>
         </div>

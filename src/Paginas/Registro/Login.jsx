@@ -1,14 +1,11 @@
 import { Link } from "react-router-dom";
 
-const Registro = () => {
+const Login = () => {
   return (
-    <div className="contenedor-formulario-registro">
-      <h3 className="titulo-formulario">Ingresa tus datos</h3>
-      <form className="formulario-registro">
-        <div className="apodo">
-          <label htmlFor="apodo">Apodo</label>
-          <input type="text" id="apodo" />
-        </div>
+    <>
+      <div className="contenedor-formulario-registro">
+      <h3 className="titulo-formulario">Inicia sesión</h3>
+      <form className="formulario-registro">        
         <div className="email">
           <label htmlFor="email">E-mail</label>
           <input type="e-mal" id="email" />
@@ -22,13 +19,14 @@ const Registro = () => {
         </button>
       </form>
       <div className="registrado">
-        <p>¿Ya estas registrado?</p>
-        <Link to="/rl/login" className="link">
-          Inicia sesión
+        <p>¿No tenes cuenta?</p>
+        <Link to="/rl/registro" className="link">
+          Registrate
         </Link>
       </div>
     </div>
+    </>
   );
 };
 
-export default Registro;
+export default Login;
