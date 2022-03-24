@@ -8,7 +8,7 @@ const Registro = () => {
     <>
       <Navbar />
       <section className="contenedor-registro">
-        <Outlet/>
+        <Outlet />
         <div className="logo-registro">
           <img src={LogoMoviePop} alt="Logo Moviepop!" />
         </div>
