@@ -16,7 +16,9 @@ const Peliculas = () => {
       console.log(error);
     }
   }, []);
-  
+
+  //Busqueda
+  const [query, setQuery] = useState("");
   return (
     <>
       <Navbar />
@@ -26,12 +28,15 @@ const Peliculas = () => {
             type="search"
             placeholder="Buscar"
             className="buscador-peliculas"
+            onChange={(e) => setQuery(e.target.value)}
           />
         </div>
         <h2 className="encabezado-peliculas">Películas</h2>
         <div className="separador"></div>
         <div className="contenedor-card">
-          {peliculas.map((pelicula, index) => (
+          {peliculas.filter((pelicula) =>
+          pelicula?.show.name.toLowerCase().includes(query)
+          ).map((pelicula, index) => (
             <Card pelicula={pelicula} key={index} />
           ))}
         </div>

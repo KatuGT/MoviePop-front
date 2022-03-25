@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import "./Card.css";
 
 const Card = (props) => {
-  console.log(props.pelicula.show?.name);
   return (
     <Link to={{ pathname: `/detalle/${props.pelicula.show?.id}` }} className="link">
       <div className="card-pelicula">
