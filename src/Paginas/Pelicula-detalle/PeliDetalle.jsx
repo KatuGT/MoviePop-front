@@ -2,6 +2,7 @@ import "./PeliDetalle.css";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Axios from "axios";
+import Cargando from "../../Imagenes/cargando.svg"
 
 const PeliDetalle = () => {
   let { id } = useParams();
@@ -28,7 +29,7 @@ const PeliDetalle = () => {
       <div className="contenedor-peli-detalle">
         <figure>
           <img
-            src={pelicula.image?.original}
+            src={pelicula.image?.original || Cargando}
             alt="Imagen de Plicula"
             className="imagen-pelicula-detalle"
           />

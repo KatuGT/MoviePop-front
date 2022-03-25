@@ -1,64 +1,70 @@
-.contenedor-peli-detalle{
-    width: 100%;
+.contenedor-peli-detalle {
+  width: 100%;
 }
 
 .flecha .fa-arrow-left {
-    color: #fff;
-    width: 100%;
-    font-size: 2em;
-    text-align: right;
+  color: #fff;
+  width: 100%;
+  font-size: 2em;
+  text-align: right;
 }
-.contenedor-peli-detalle figure{
-    margin-top: 1.5em;
+.contenedor-peli-detalle figure {
+  margin-top: 1.5em;
 }
-.imagen-pelicula-detalle{
-    max-width: 100%;
-    aspect-ratio: 1/1.125;
-    object-fit: cover;
-    object-position: top;
-}
-
-.titulo-peli-detalle{
-    text-align: center;
-    font-weight: 800;
-    font-size: 1.3em;
-    color: #fff;
-    margin-top: 1em;
+.imagen-pelicula-detalle {
+  max-width: 100%;
+  aspect-ratio: 1/1.125;
+  object-fit: cover;
+  object-position: top;
 }
 
-.dato{
-    display: flex;
-    color: #fff;
-    font-size: 14px;
+.titulo-peli-detalle {
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.3em;
+  color: #fff;
+  margin-top: 1em;
 }
 
-.item{
-    font-weight: 700;
-    margin-right: 0.5em;
+.dato {
+  display: flex;
+  color: #fff;
+  font-size: 14px;
+}
+
+.item {
+  font-weight: 700;
+  margin-right: 0.5em;
 }
 
 .link-sitio-oficial {
-    color: #fff;
+  color: #fff;
 }
-.sinopsis-texto{
-    color: #fff;
-    margin-top: 1.5em;
-    font-size: 14px;
+.sinopsis-texto {
+  color: #fff;
+  margin-top: 1.5em;
+  font-size: 14px;
 }
-
 
 @media screen and (min-width: 1000px) {
-    .contenedor-peli-detalle{
-        margin-top: 1em;
-        display: flex;
-        gap: 10px;
-    }
+  .contenedor-peli-detalle {
+    margin-top: 1em;
+    display: flex;
+    gap: 10px;
+  }
 
-    .titulo-peli-detalle{
-        text-align: left;
-    }
+  .titulo-peli-detalle {
+    text-align: left;
+    font-size: 30px;
+  }
 
-    .sinopsis-texto{
-        margin-top:0 ;
-    }
+  .sinopsis-texto {
+    margin-top: 0; 
+
+  }
+
+  .sinopsis-texto,
+  .dato{
+    font-size: 16px;
+  }
 }
