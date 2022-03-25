@@ -15,6 +15,7 @@
     max-width: 100%;
     aspect-ratio: 1/1.125;
     object-fit: cover;
+    object-position: top;
 }
 
 .titulo-peli-detalle{
@@ -34,6 +35,10 @@
 .item{
     font-weight: 700;
     margin-right: 0.5em;
+}
+
+.link-sitio-oficial {
+    color: #fff;
 }
 .sinopsis-texto{
     color: #fff;

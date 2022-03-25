@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
 import "./Card.css";
 
-const Card = () => {
+const Card = (props) => {
+  console.log(props.pelicula.show?.name);
   return (
-    <Link to="/detalle" className="link">
+    <Link to={{ pathname: `/detalle/${props.pelicula.show?.id}` }} className="link">
       <div className="card-pelicula">
         <img
-          src="https://img.freepik.com/foto-gratis/primer-disparo-flor-morada_181624-25863.jpg?size=626&ext=jpg"
+          src={props.pelicula.show.image?.original}
           alt="Imagen de Plicula"
           className="imagen-pelicula"
         />
-        <h4 className="titulo-pelicula">Pelicula</h4>
+        <h4 className="titulo-pelicula">{props.pelicula.show?.name}</h4>
       </div>
     </Link>
   );
