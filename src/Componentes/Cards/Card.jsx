@@ -7,7 +7,7 @@ const Card = (props) => {
     <Link to={{ pathname: `/detalle/${props.pelicula?.id}` }} className="link">
       <div className="card-pelicula">
         <img
-          src={props.pelicula.image?.original}
+          src={props.pelicula.image?.original || Cargando}
           alt="Imagen de Plicula"
           className="imagen-pelicula"
         />

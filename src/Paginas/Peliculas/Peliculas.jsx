@@ -9,6 +9,8 @@ import Cargando from "../../Imagenes/cargando.svg";
 const Peliculas = () => {
   const [peliculas, setPeliculas] = useState([]);
   const [pagina, setPagina] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
   //Busqueda
   const [query, setQuery] = useState("");
 
@@ -16,8 +18,7 @@ const Peliculas = () => {
     try {
       const queryArray = query ? query.split(" ") : null;
 
-      const newQuery = query ? queryArray.join("%20") :  null;
-        console.log(newQuery);
+      const newQuery = query ? queryArray.join("%20") : null;
       Axios.get(
         !query
           ? `https://api.tvmaze.com/shows?page=${pagina}`
@@ -26,10 +27,11 @@ const Peliculas = () => {
       ).then((res) => {
         if (!query) {
           setPeliculas((prevPeliculas) => prevPeliculas.concat(res.data));
+          setHasMore(res.data.totalPages < res.pageToLoad);
         } else {
           const auxArray = res.data.map((pelicula) => {
-            return pelicula.show;            
-          })
+            return pelicula.show;
+          });
           setPeliculas(auxArray);
         }
       });
@@ -37,7 +39,6 @@ const Peliculas = () => {
       console.log(error);
     }
   }, [pagina, query]);
-  //console.log(peliculas);
 
   return (
     <>
@@ -57,24 +58,18 @@ const Peliculas = () => {
           dataLength={peliculas.length}
           className="contenedor-card"
           next={() => setPagina((prevPagina) => prevPagina + 1)}
-          loader={<img src={Cargando} alt="icono cargando" />}
-          hasMore={true}
-          endMessage={
-            <p className="sin-peliculas">
-              <b>No hay elemento para ver.</b>
-            </p>
+          loader={
+            <img
+              className="cargando-peliculas"
+              src={Cargando}
+              alt="icono cargando"
+            />
           }
+          hasMore={hasMore}
         >
           {peliculas?.map((pelicula, index) => (
             <Card pelicula={pelicula} key={index} />
           ))}
-
-          {/* {peliculas
-            .filter((pelicula) => pelicula.name?.toLowerCase().includes(query))
-            .map(
-              (pelicula, index) =>
-                <Card pelicula={pelicula} key={index} /> || <Cargando />
-            )} */}
         </InfiniteScroll>
       </div>
     </>

@@ -53,6 +53,10 @@
   text-align: center;
 }
 
+.cargando-peliculas{
+  margin: 0 auto;
+}
+
 
 @media screen and (min-width: 800px) {
   .contenedor-card{
