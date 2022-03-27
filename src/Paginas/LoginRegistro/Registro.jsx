@@ -2,10 +2,14 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
+import { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const Registro = () => {
   const schema = yup.object().shape({
-    apodo: yup
+    username: yup
       .string()
       .required("Este campo es obligatorio")
       .min(4, "Debe tener almenos 4 caracteres.")
@@ -18,7 +22,10 @@ const Registro = () => {
       .string()
       .required("Este campo es obligatorio")
       .min(8, "Debe tener almenos 8 caracteres")
-      .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, "Almenos debe tener 1 letra y 1 numero"),
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        "Almenos debe tener 1 letra y 1 numero"
+      ),
     confirmPassword: yup
       .string()
       .required("Este campo es obligatorio")
@@ -32,10 +39,21 @@ const Registro = () => {
     reset,
   } = useForm({ resolver: yupResolver(schema) });
 
-  const handleRegistro = (formData) => {
-    console.log(formData);
-    reset();
-  };
+  const [error, setError] = useState(false)
+  async function handleRegistro(formData) {
+    setError(false)
+    try {
+      await axios.post("http://localhost:5002/api/aut/register", formData);
+      toast.success('Usuario creado!',{
+        duration: 4000,
+        position: 'botton-center',
+      });
+      reset();
+    } catch (error) {
+      console.log(error);
+      setError(error)
+    }
+  }
 
   return (
     <div className="contenedor-formulario-registro">
@@ -49,7 +67,7 @@ const Registro = () => {
           <input
             type="text"
             id="apodo"
-            {...register("apodo")}
+            {...register("username")}
             placeholder="Pepito2021"
           />
           <p className="mensaje-error">{errors.apodo?.message}</p>
@@ -89,6 +107,7 @@ const Registro = () => {
         <button className="boton-enviar" type="submit">
           Enviar
         </button>
+        {error && <p className="mensaje-error">Puede que el apodo o email ya esten en uso.</p>}
       </form>
       <div className="registrado">
         <p>¿Ya estas registrado?</p>
@@ -96,6 +115,7 @@ const Registro = () => {
           Inicia sesión
         </Link>
       </div>
+      <Toaster/>
     </div>
   );
 };
