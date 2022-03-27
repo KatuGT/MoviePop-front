@@ -7,12 +7,12 @@ import {
 import Home from "./Paginas/Home/Home.jsx";
 import PeliDetalle from "./Paginas/Pelicula-detalle/PeliDetalle.jsx";
 import Peliculas from "./Paginas/Peliculas/Peliculas.jsx";
-import Login from "./Paginas/Registro/Login.jsx";
-import LoginRegistro from "./Paginas/Registro/LoginRegistro.jsx";
-import Registro from "./Paginas/Registro/Registro.jsx";
+import Login from "./Paginas/LoginRegistro/Login.jsx";
+import LoginRegistro from "./Paginas/LoginRegistro/LoginRegistro.jsx";
+import Registro from "./Paginas/LoginRegistro/Registro.jsx";
 
 function App() {
-  const user = true;
+  const user = false;
   return (
     <div className="App">
       <Router>
