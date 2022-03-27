@@ -8,6 +8,12 @@ nav .link.active {
   color: #c48900;
 }
 
+.usuario-nav{
+  display: flex;
+}
+.usuario-nav p{
+  margin-left: 0.5em;
+}
 .wrapper-login .link.active::before{
     content: "";
   background-color: #c48900;
@@ -55,3 +61,5 @@ nav .link.active {
 .wrapper-login .link:hover::before {
   transform: scale(1);
 }
+
+

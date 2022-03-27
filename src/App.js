@@ -10,34 +10,37 @@ import Peliculas from "./Paginas/Peliculas/Peliculas.jsx";
 import Login from "./Paginas/LoginRegistro/Login.jsx";
 import LoginRegistro from "./Paginas/LoginRegistro/LoginRegistro.jsx";
 import Registro from "./Paginas/LoginRegistro/Registro.jsx";
+import { AutContext } from "./Context/AutContext.js";
+import { useContext } from "react";
 
 function App() {
-  const user = false;
+  const { usuario } = useContext(AutContext);
+
   return (
     <div className="App">
       <Router>
         <Routes>
           <Route
             index
-            element={!user ? <Navigate to="/rl/login" /> : <Home />}
+            element={!usuario ? <Navigate to="/rl/login" /> : <Home />}
           />
           <Route
             path="peliculas"
-            element={!user ? <Navigate to="/rl/login" /> : <Peliculas />}
+            element={!usuario ? <Navigate to="/rl/login" /> : <Peliculas />}
           />
           <Route path="rl" element={<LoginRegistro />}>
             <Route
               path="registro"
-              element={user ? <Navigate to="/" /> : <Registro />}
+              element={usuario ? <Navigate to="/" /> : <Registro />}
             />
             <Route
               path="login"
-              element={user ? <Navigate to="/" /> : <Login />}
+              element={usuario ? <Navigate to="/" /> : <Login />}
             />
           </Route>
           <Route
             path="detalle/:id"
-            element={!user ? <Navigate to="/rl/login" /> : <PeliDetalle />}
+            element={!usuario ? <Navigate to="/rl/login" /> : <PeliDetalle />}
           />
         </Routes>
       </Router>
