@@ -1,0 +1,40 @@
+.contenedor-mi-cuenta{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 50px;
+    margin-top: 2em;
+    color: #fff;
+    font-size: 1.8em;
+}
+
+.contenedor-mi-cuenta .default-foto-perfil{
+    height: 2em;
+    aspect-ratio: 1/1;
+    background-color: rgb(84, 151, 240);
+    border-radius: 100em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5em;
+}
+
+
+.contenedor-mi-cuenta .info{
+    display: flex;
+}
+
+.contenedor-mi-cuenta .resaltar{
+    font-weight: 700;
+    margin-right: 0.5em;
+}
+
+.contenedor-mi-cuenta .editar-datos{
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: rgb(14, 34, 57);
+    font-weight: 600;
+    margin-top: 1em;
+    cursor: pointer;
+}

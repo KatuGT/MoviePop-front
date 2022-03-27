@@ -20,7 +20,6 @@ const PeliDetalle = () => {
     getPelicula();
   }, [id]);
 
-  console.log(pelicula);
   return (
     <>
       <Link to="/peliculas" className="flecha link">

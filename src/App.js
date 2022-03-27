@@ -12,6 +12,10 @@ import LoginRegistro from "./Paginas/LoginRegistro/LoginRegistro.jsx";
 import Registro from "./Paginas/LoginRegistro/Registro.jsx";
 import { AutContext } from "./Context/AutContext.js";
 import { useContext } from "react";
+import UsuarioConfig from "./Paginas/UsuarioConfig/UsuarioConfig.jsx";
+import MiCuenta from "./Paginas/MiCuenta/MiCuenta.jsx";
+import MisFavoritos from "./Paginas/MisFavoritos/MisFavoritos.jsx";
+import ListaUsuarios from "./Paginas/ListaUsuarios/ListaUsuarios.jsx";
 
 function App() {
   const { usuario } = useContext(AutContext);
@@ -28,6 +32,14 @@ function App() {
             path="peliculas"
             element={!usuario ? <Navigate to="/rl/login" /> : <Peliculas />}
           />
+          <Route
+            path="configuracion"
+            element={!usuario ? <Navigate to="/rl/login" /> : <UsuarioConfig /> }
+          >
+            <Route path="mi-cuenta" element={<MiCuenta/>}/>
+            <Route path="favoritos" element={<MisFavoritos/>}/>
+            <Route path="lista-usuarios" element={<ListaUsuarios/>}/>
+          </Route>
           <Route path="rl" element={<LoginRegistro />}>
             <Route
               path="registro"

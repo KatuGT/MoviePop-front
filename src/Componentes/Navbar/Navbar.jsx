@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AutContext } from "../../Context/AutContext";
 import axios from "axios";
 
 const Navbar = () => {
-  const { usuario } = useContext(AutContext);
+  const { usuario, dispatch } = useContext(AutContext);
 
   //GET USUARIO
   const [datosActualesUsuario, setDatosActualesUsuario] = useState([]);
@@ -13,26 +13,40 @@ const Navbar = () => {
   useEffect(() => {
     async function getUsuario() {
       try {
-        const datosUduarios = await axios.get(
-          `http://localhost:5002/api/usuario/find/${usuario._id}`
-        );
-        setDatosActualesUsuario(datosUduarios.data);
+        if (usuario !== null) {
+          const datosUduarios = await axios.get(
+            `http://localhost:5002/api/usuario/find/${usuario?._id}`
+          );
+          setDatosActualesUsuario(datosUduarios?.data);
+        }else{
+          setDatosActualesUsuario([])
+        }
       } catch (error) {
         console.log(error);
       }
     }
-    getUsuario()
-  }, [usuario._id]);
+    
+    getUsuario();
+    
+  }, [usuario?._id, usuario]);
+
+  let navigate = useNavigate();
+
+  //CERRAR SESION
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/");
+  };
 
   return (
     <>
       <nav>
         <div className="wrapper-login">
-          {usuario ? (
-            <NavLink to="/rl/registro" className="registro link">
+          {usuario !== null ? (
+            <NavLink to="configuracion" className="registro link">
               <div className="usuario-nav">
                 <i className="fas fa-user-circle"></i>
-                <p>{datosActualesUsuario.username}</p>
+                <p>{datosActualesUsuario?.username}</p>
               </div>
             </NavLink>
           ) : (
@@ -40,8 +54,10 @@ const Navbar = () => {
               Registrate
             </NavLink>
           )}
-          {usuario ? (
-            <p className="link">Cerrar sesión</p>
+          {usuario !== null ? (
+            <p onClick={handleLogout} className="link">
+              Cerrar sesión
+            </p>
           ) : (
             <NavLink to="/rl/login" className="login link">
               Inicia sesión
