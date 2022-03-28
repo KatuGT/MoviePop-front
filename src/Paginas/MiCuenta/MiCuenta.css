@@ -38,3 +38,19 @@
     margin-top: 1em;
     cursor: pointer;
 }
+
+.dato-edit{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.dato-edit input{
+    padding: 0.5em;
+    border-radius: 5px;
+}
+
+#editContrasenia{
+    margin-right: 0.5em;
+    margin-bottom: 1em;
+}

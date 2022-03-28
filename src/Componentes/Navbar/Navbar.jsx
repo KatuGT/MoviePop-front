@@ -43,7 +43,7 @@ const Navbar = () => {
       <nav>
         <div className="wrapper-login">
           {usuario !== null ? (
-            <NavLink to="configuracion" className="registro link">
+            <NavLink to="/configuracion" className="registro link">
               <div className="usuario-nav">
                 <i className="fas fa-user-circle"></i>
                 <p>{datosActualesUsuario?.username}</p>

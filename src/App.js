@@ -36,7 +36,7 @@ function App() {
             path="configuracion"
             element={!usuario ? <Navigate to="/rl/login" /> : <UsuarioConfig /> }
           >
-            <Route path="mi-cuenta" element={<MiCuenta/>}/>
+            <Route path="mi-cuenta/:id" element={<MiCuenta/>}/>
             <Route path="favoritos" element={<MisFavoritos/>}/>
             <Route path="lista-usuarios" element={<ListaUsuarios/>}/>
           </Route>
