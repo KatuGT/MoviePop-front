@@ -66,6 +66,10 @@ button.enviar-edit{
     border-radius: 5px;
 }
 
+#editContrasenia{
+    margin-right: 0.5em;
+}
+
 
 @media screen  and (max-width: 880px){
     .contenedor-mi-cuenta{

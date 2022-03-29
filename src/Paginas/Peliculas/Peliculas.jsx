@@ -27,7 +27,7 @@ const Peliculas = () => {
       ).then((res) => {
         if (!query) {
           setPeliculas((prevPeliculas) => prevPeliculas.concat(res.data));
-          setHasMore(res.data.totalPages < res.pageToLoad);
+          setHasMore(res.data.totalPages >= res.pageToLoad);
         } else {
           const auxArray = res.data.map((pelicula) => {
             return pelicula.show;

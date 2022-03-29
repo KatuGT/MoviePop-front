@@ -5,8 +5,7 @@ import "./MiCuenta.css";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import toast, { Toaster } from 'react-hot-toast';
-
+import toast, { Toaster } from "react-hot-toast";
 
 const MiCuenta = () => {
   const { usuario } = useContext(AutContext);
@@ -44,12 +43,26 @@ const MiCuenta = () => {
       .string()
       .email("Ingrese un e-mail valido.")
       .required("Este campo es obligatorio"),
-    fotoPerfil: yup
-      .string()
-      .url("Ingrese un enlace valido.")
+    fotoPerfil: yup.string().url("Ingrese un enlace valido."),
+    password: yup.string().when("editContrasenia", {
+      is: true,
+      then: yup
+        .string()
+        .required("El campo es requerido.")
+        .min(8, "La contraseña debe tener almenos 8 caracteres.")
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+          "No cumple con lo requisitos."
+        ),
+    }),
+    confirmPwd: yup.string().when("editContrasenia", {
+      is: true,
+      then: yup
+        .string()
+        .required("El campo es requerido.")
+        .oneOf([yup.ref("password"), null], "Las contraseñas no coinciden."),
+    }),
   });
-
-  // const editContrasenia = watch("editContrasenia");
 
   //ACTUALIZAR MIS DATOS
   const {
@@ -59,20 +72,27 @@ const MiCuenta = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
+  const editContrasenia = watch("editContrasenia");
+
   const editarCuenta = async (data) => {
+    
     try {
-      await axios.put(`http://localhost:5002/api/usuario/${usuario._id}`, data,{
-        headers: { token:usuario.accessToken}
-      })
-      document.getElementById("boton-cerrar").click()
-      toast.success('Edicion exitosa!',{
+      await axios.put(
+        `http://localhost:5002/api/usuario/${usuario._id}`,
+        data,
+        {
+          headers: { token: usuario.accessToken },
+        }
+      );
+      document.getElementById("boton-cerrar").click();
+      toast.success("Edicion exitosa!", {
         duration: 4000,
-        position: 'botton-center',
+        position: "botton-center",
       });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -101,6 +121,7 @@ const MiCuenta = () => {
               {miCuenta?.esAdmin ? "Administrador" : "Usuario"}
             </p>
           </div>
+         
           <button
             type="button"
             className="editar-datos"
@@ -143,7 +164,11 @@ const MiCuenta = () => {
                     {...register("username")}
                     id="username-edit"
                   />
-                  {errors.username && (<span className="mensaje-error">{errors.username?.messaje}</span>)}
+                  {errors.username && (
+                    <span className="mensaje-error">
+                      {errors.username?.messaje}
+                    </span>
+                  )}
                 </div>
                 <div className="dato-edit">
                   <label htmlFor="edit-email">E-mail</label>
@@ -163,7 +188,58 @@ const MiCuenta = () => {
                     id="edit-foto"
                   />
                 </div>
-                <button type="submit" className="enviar-edit" > Enviar </button>
+                <div className="condicional-contrasenia">
+            <input
+              id="editContrasenia"
+              type="checkbox"
+              name="editContrasenia"
+              {...register("editContrasenia")}
+            />
+            <label htmlFor="editContrasenia">Deseo editar contraseña</label>
+          </div>
+          {editContrasenia && (
+            <>
+              <div className="dato-edit">
+                <label htmlFor="contrasenia">Contraseña nueva</label>
+                <input
+                  className="nuevaContrasenia"
+                  type="password"
+                  placeholder="Nueva contraseña"
+                  autoComplete="off"
+                  id="contrasenia"
+                  {...register("password")}
+                />                
+                {errors.password && (
+                  <span className="mensaje-error">
+                    {errors.password.message}
+                  </span>
+                )}
+              </div>
+              <div className="dato-edit">
+                <label htmlFor="nuevaContraseniaConf">
+                  Confirmación de nueva contraseña
+                </label>
+                <input
+                  className="nuevaContraseniaConf"
+                  id="nuevaContraseniaConf"
+                  type="password"
+                  autoComplete="off"
+                  placeholder="Repita la contraseña*"
+                  {...register("confirmPwd")}
+                />
+                
+                {errors.confirmPwd && (
+                  <span className="mensaje-error">
+                    {errors.confirmPwd.message}
+                  </span>
+                )}
+              </div>
+            </>
+          )}
+                <button type="submit" className="enviar-edit">
+                  {" "}
+                  Enviar{" "}
+                </button>
               </form>
             </div>
             <div className="modal-footer">
@@ -174,12 +250,12 @@ const MiCuenta = () => {
                 id="boton-cerrar"
               >
                 Cerrar
-              </button>             
+              </button>
             </div>
           </div>
         </div>
       </div>
-      <Toaster/>
+      <Toaster />
     </>
   );
 };
