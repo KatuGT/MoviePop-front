@@ -29,6 +29,19 @@
     margin-right: 0.5em;
 }
 
+.contenedor-mi-cuenta .foto-mi-cuenta{
+    height: 10em;
+    aspect-ratio: 1/1;
+}
+
+.contenedor-mi-cuenta .foto-mi-cuenta img{
+    height: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 100vh;
+    
+}
+
 .contenedor-mi-cuenta .editar-datos{
     border: none;
     padding: 10px 20px;
@@ -45,3 +58,17 @@
     margin-bottom: 1em;
 }
 
+button.enviar-edit{
+    border: none;
+    padding: 0.5em 1em;
+    background-color: rgba(34,60,83,1);
+    color: #fff;
+    border-radius: 5px;
+}
+
+
+@media screen  and (max-width: 880px){
+    .contenedor-mi-cuenta{
+        flex-direction: column;
+    }
+}

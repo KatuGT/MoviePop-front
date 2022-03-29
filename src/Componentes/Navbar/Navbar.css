@@ -73,3 +73,11 @@ a.registro.link.foto.link:hover{
 .nav-userneme:hover{
  color: #c48900;
 }
+
+.foto-nav{
+  height: 2em;
+  aspect-ratio: 1/1;
+  border-radius: 100vh;
+  object-fit: cover;
+  margin-right: 0.5em;
+}

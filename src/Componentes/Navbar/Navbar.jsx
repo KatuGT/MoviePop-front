@@ -27,7 +27,7 @@ const Navbar = () => {
     }
 
     getUsuario();
-  }, [usuario?._id, usuario]);
+  }, [usuario?._id, usuario, datosActualesUsuario]);
 
   let navigate = useNavigate();
 
@@ -49,6 +49,7 @@ const Navbar = () => {
                     <img
                       src={datosActualesUsuario?.fotoPerfil}
                       alt="foto de perfil"
+                      className="foto-nav"
                     />
                     <span className="nav-userneme">{datosActualesUsuario?.username}</span>
                   </>

@@ -5,6 +5,8 @@ import "./MiCuenta.css";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const MiCuenta = () => {
   const { usuario } = useContext(AutContext);
@@ -29,7 +31,7 @@ const MiCuenta = () => {
     }
 
     getUsuario();
-  }, [usuario?._id, usuario]);
+  }, [usuario?._id, usuario, miCuenta]);
 
   //Validacion
   const schema = yup.object().shape({
@@ -62,6 +64,11 @@ const MiCuenta = () => {
       await axios.put(`http://localhost:5002/api/usuario/${usuario._id}`, data,{
         headers: { token:usuario.accessToken}
       })
+      document.getElementById("boton-cerrar").click()
+      toast.success('Edicion exitosa!',{
+        duration: 4000,
+        position: 'botton-center',
+      });
     } catch (error) {
       console.log(error);
     }
@@ -75,7 +82,7 @@ const MiCuenta = () => {
             {miCuenta.username?.charAt(0)}
           </div>
         ) : (
-          <figure>
+          <figure className="foto-mi-cuenta">
             <img src={miCuenta.fotoPerfil} alt="Foto-perfil" />
           </figure>
         )}
@@ -85,7 +92,7 @@ const MiCuenta = () => {
             <p className="apodo">{miCuenta?.username}</p>
           </div>
           <div className="info">
-            <p className="resaltar">E-mail:</p>
+            <p className="resaltar">Email:</p>
             <p className="apodo">{miCuenta?.email}</p>
           </div>
           <div className="info">
@@ -156,7 +163,7 @@ const MiCuenta = () => {
                     id="edit-foto"
                   />
                 </div>
-                <input type="submit" />
+                <button type="submit" className="enviar-edit" > Enviar </button>
               </form>
             </div>
             <div className="modal-footer">
@@ -164,16 +171,15 @@ const MiCuenta = () => {
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
+                id="boton-cerrar"
               >
-                Close
-              </button>
-              <button type="button" className="btn btn-primary">
-                Understood
-              </button>
+                Cerrar
+              </button>             
             </div>
           </div>
         </div>
       </div>
+      <Toaster/>
     </>
   );
 };
