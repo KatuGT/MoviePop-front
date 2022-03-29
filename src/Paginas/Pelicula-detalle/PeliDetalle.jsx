@@ -2,7 +2,9 @@ import "./PeliDetalle.css";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Axios from "axios";
-import Cargando from "../../Imagenes/cargando.svg"
+import Cargando from "../../Imagenes/cargando.svg";
+import { AutContext } from "../../Context/AutContext";
+import { useContext } from "react";
 
 const PeliDetalle = () => {
   let { id } = useParams();
@@ -19,6 +21,32 @@ const PeliDetalle = () => {
     };
     getPelicula();
   }, [id]);
+
+  //agregar a favoritos
+  const { usuario } = useContext(AutContext);
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleOnChange = () => {
+    setIsChecked(!isChecked);
+    console.log(isChecked);
+  };
+
+  async function agregarBorrarFav(idPelicula) {
+    try {
+      if (isChecked) {
+        await Axios.post(
+          `http://localhost:5002/api/usuario/${usuario?._id}/addfavorito/${idPelicula}`
+        );
+      } else {
+        await Axios.delete(
+          `http://localhost:5002/api/usuario/${usuario?._id}/borrarpelicula/${idPelicula}`
+        );
+      }
+    } catch (error) {
+      console.log();
+    }
+  }
 
   return (
     <>
@@ -70,6 +98,25 @@ const PeliDetalle = () => {
           </section>
           <h3 className="titulo-peli-detalle sinopsis">Sinopsis</h3>
           <p className="sinopsis-texto">{pelicula?.summary}</p>
+          <div className="contenedor-favoritos">
+            <input
+              id={`peli${id}`}
+              type="checkbox"
+              onChange={handleOnChange}
+              checked={isChecked}
+            />
+            {isChecked ? (
+              <label className="agregarFav" htmlFor={`peli${id}`} onClick={() => agregarBorrarFav(id)}>
+                <i className="far fa-heart"></i>
+                <p>Agregar favoritos</p>
+              </label>
+            ) : (
+              <label className="quitarFav" htmlFor={`peli${id}`} onClick={() => agregarBorrarFav(id)}>
+                <i className="fas fa-heart "></i>
+                <p>Quitar de favoritos</p>
+              </label>
+            )}
+          </div>
         </section>
       </div>
     </>

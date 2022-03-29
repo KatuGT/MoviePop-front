@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { AutContext } from "../../Context/AutContext";
 import "./MiCuenta.css";
 import { useForm } from "react-hook-form";
+import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
 
 const MiCuenta = () => {
   const { usuario } = useContext(AutContext);
@@ -32,19 +32,23 @@ const MiCuenta = () => {
   }, [usuario?._id, usuario]);
 
   //Validacion
-  const esquemaActualisacionUsuario = Yup.object().shape({
-    username: Yup.string()
+  const esquemaActualisacionUsuario = yup.object().shape({
+    username: yup
+      .string()
       .required("El campo es requerido.")
       .min(4, "Debe tener almenos 4 caracteres.")
       .max(15, "Debe tener como máximo 15 caracteres."),
-    email: Yup.string()
+    email: yup
+      .string()
       .required("El campo es requerido.")
       .email("Introdusca un Email valido."),
-    esAdmin: Yup.boolean().required("El campo es requerido."),
-    editContrasenia: Yup.boolean(),
-    password: Yup.string().when("editContrasenia", {
+    fotoPerfil: yup.string().url("Introdusca un link valido."),
+    esAdmin: yup.boolean().required("El campo es requerido."),
+    editContrasenia: yup.boolean(),
+    password: yup.string().when("editContrasenia", {
       is: true,
-      then: Yup.string()
+      then: yup
+        .string()
         .required("El campo es requerido.")
         .min(8, "La contraseña debe tener almenos 8 caracteres.")
         .matches(
@@ -52,42 +56,27 @@ const MiCuenta = () => {
           "No cumple con lo requisitos."
         ),
     }),
-    confirmPwd: Yup.string().when("editContrasenia", {
+    confirmPwd: yup.string().when("editContrasenia", {
       is: true,
-      then: Yup.string()
+      then: yup
+        .string()
         .required("El campo es requerido.")
-        .oneOf([Yup.ref("password"), null], "Las contraseñas no coinciden."),
+        .oneOf([yup.ref("password"), null], "Las contraseñas no coinciden."),
     }),
   });
-
-  const opcionesActualisacion = {
-    resolver: yupResolver(esquemaActualisacionUsuario),
-  };
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    reset,
+    
     watch,
-  } = useForm(opcionesActualisacion);
+  } = useForm({ resolver: yupResolver(esquemaActualisacionUsuario) });
 
   const editContrasenia = watch("editContrasenia");
 
   //ACTUALIZAR MIS DATOS
-  async function actualizarUsuario(formData) {
-    
-      console.log(formData);
-      await axios.put(
-        `http://localhost:5002/api/usuario/${usuario._id}`,
-        {formData},
-        {
-          headers: { token: usuario.accessToken },
-        }
-      );
-    
-
-    window.location.reload();
+   function editarUsuario(formData) {
+         console.log(formData);
   }
 
   return (
@@ -127,135 +116,10 @@ const MiCuenta = () => {
           </button>
         </section>
       </section>
-
-      <div
-        className="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabIndex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="staticBackdropLabel">
-                Editar mi usuario
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form onSubmit={handleSubmit(actualizarUsuario)}>
-                <div className="dato-edit">
-                  <label htmlFor="apodo">Apodo</label>
-                  <input
-                    id="apodo"
-                    type="text"
-                    {...register("username")}
-                    defaultValue={miCuenta?.username}
-                  />
-                  {errors.username && (
-                    <p className="mensaje-error">{errors.username.message}</p>
-                  )}
-                </div>
-                <div className="dato-edit">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    id="email"
-                    type="email"
-                    {...register("email")}
-                    defaultValue={miCuenta?.email}
-                  />
-                  {errors.email && (
-                    <p className="mensaje-error">{errors.email.message}</p>
-                  )}
-                </div>
-                <div className="dato-edit">
-                  <label htmlFor="foto-perfil">Foto de Perfil</label>
-                  <input
-                    id="foto-perfil"
-                    type="url"
-                    defaultValue={miCuenta?.fotoPerfil}
-                    {...register("fotoPerfil")}
-                  />
-                  {errors.fotoPerfil && (
-                    <p className="mensaje-error">{errors.fotoPerfil.message}</p>
-                  )}
-                </div>
-                <div className="condicional-contrasenia">
-                  <input
-                    id="editContrasenia"
-                    type="checkbox"
-                    name="editContrasenia"
-                    {...register("editContrasenia")}
-                  />
-                  <label htmlFor="editContrasenia">
-                    Deseo editar contraseña
-                  </label>
-                </div>
-                {editContrasenia && (
-                  <>
-                    <div className="dato-edit contrasenia-edit">
-                      <label htmlFor="contrasenia">Contraseña nueva</label>
-                      <input
-                        className="nuevaContrasenia"
-                        type="password"
-                        placeholder="Nueva contraseña"
-                        autoComplete="off"
-                        id="contrasenia"
-                        {...register("password")}
-                      />
-                      {errors.password && (
-                        <p className="mensaje-error">
-                          {errors.password.message}
-                        </p>
-                      )}
-                    </div>
-                    <div className="dato-edit contrasenia-edit-confirm">
-                      <label htmlFor="nuevaContraseniaConf">
-                        Confirmación de nueva contraseña
-                      </label>
-                      <input
-                        defaultValue={miCuenta?.password}
-                        className="nuevaContraseniaConf"
-                        id="nuevaContraseniaConf"
-                        type="password"
-                        autoComplete="off"
-                        placeholder="Repita la contraseña*"
-                        {...register("confirmPwd")}
-                      />
-
-                      {errors.confirmPwd && (
-                        <p className="mensaje-error">
-                          {errors.confirmPwd.message}
-                        </p>
-                      )}
-                    </div>
-                  </>
-                )}
-                <button type="submit"  className="btn btn-primary">
-                  Enviar
-                </button>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <form onSubmit={handleSubmit(editarUsuario)}>
+        <input type="text" {...register("username")}   />
+        <button type="submit"> enviar</button>
+      </form>
     </>
   );
 };
