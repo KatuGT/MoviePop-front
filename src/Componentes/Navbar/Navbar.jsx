@@ -46,13 +46,19 @@ const Navbar = () => {
               <div className="usuario-nav">
                 {datosActualesUsuario?.fotoPerfil ? (
                   <>
-                  <img src={datosActualesUsuario?.fotoPerfil} alt="foto de perfil" />
-                  <h3>{datosActualesUsuario?.username}</h3>
+                    <img
+                      src={datosActualesUsuario?.fotoPerfil}
+                      alt="foto de perfil"
+                    />
+                    <span className="nav-userneme">{datosActualesUsuario?.username}</span>
                   </>
                 ) : (
-                  <span className="default-foto">
+                  <>
+                    <span className="default-foto">
                       {datosActualesUsuario.username?.charAt(0)}
-                  </span>
+                    </span>
+                    <span className="nav-userneme">{datosActualesUsuario?.username}</span>
+                  </>
                 )}
               </div>
             </NavLink>

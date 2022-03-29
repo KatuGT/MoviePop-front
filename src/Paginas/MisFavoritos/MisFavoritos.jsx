@@ -30,7 +30,6 @@ const MisFavoritos = () => {
     getUsuario();
   }, [usuario?._id, usuario]);
 
-  console.log(misFavoritos);
 
   return (
     <div className='favorito-resaltar'>{misFavoritos.map((favorito, index) =>

@@ -61,12 +61,15 @@ p.link:hover {
   align-items: center;
   font-size: 2em;
   margin-bottom: 0;
-  align-items: center;
-  justify-content: center;
+  margin-right: 0.2em;
 }
 
 
 a.registro.link.foto.link.active,
 a.registro.link.foto.link:hover{
   color: #fff;
+}
+
+.nav-userneme:hover{
+ color: #c48900;
 }

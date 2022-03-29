@@ -32,51 +32,39 @@ const MiCuenta = () => {
   }, [usuario?._id, usuario]);
 
   //Validacion
-  const esquemaActualisacionUsuario = yup.object().shape({
+  const schema = yup.object().shape({
     username: yup
       .string()
-      .required("El campo es requerido.")
+      .required("Este campo es obligatorio")
       .min(4, "Debe tener almenos 4 caracteres.")
       .max(15, "Debe tener como máximo 15 caracteres."),
     email: yup
       .string()
-      .required("El campo es requerido.")
-      .email("Introdusca un Email valido."),
-    fotoPerfil: yup.string().url("Introdusca un link valido."),
-    esAdmin: yup.boolean().required("El campo es requerido."),
-    editContrasenia: yup.boolean(),
-    password: yup.string().when("editContrasenia", {
-      is: true,
-      then: yup
-        .string()
-        .required("El campo es requerido.")
-        .min(8, "La contraseña debe tener almenos 8 caracteres.")
-        .matches(
-          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-          "No cumple con lo requisitos."
-        ),
-    }),
-    confirmPwd: yup.string().when("editContrasenia", {
-      is: true,
-      then: yup
-        .string()
-        .required("El campo es requerido.")
-        .oneOf([yup.ref("password"), null], "Las contraseñas no coinciden."),
-    }),
+      .email("Ingrese un e-mail valido.")
+      .required("Este campo es obligatorio"),
+    fotoPerfil: yup
+      .string()
+      .url("Ingrese un enlace valido.")
   });
 
+  // const editContrasenia = watch("editContrasenia");
+
+  //ACTUALIZAR MIS DATOS
   const {
     register,
     handleSubmit,
-    
     watch,
-  } = useForm({ resolver: yupResolver(esquemaActualisacionUsuario) });
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
 
- // const editContrasenia = watch("editContrasenia");
-
-  //ACTUALIZAR MIS DATOS
-   function editarUsuario(formData) {
-         console.log(formData);
+  const editarCuenta = async (data) => {
+    try {
+      await axios.put(`http://localhost:5002/api/usuario/${usuario._id}`, data,{
+        headers: { token:usuario.accessToken}
+      })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -116,10 +104,76 @@ const MiCuenta = () => {
           </button>
         </section>
       </section>
-      <form onSubmit={handleSubmit(editarUsuario)}>
-        <input type="text" {...register("username")}   />
-        <button type="submit"> enviar</button>
-      </form>
+
+      <div
+        className="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabIndex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="staticBackdropLabel">
+                Editar
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleSubmit(editarCuenta)}>
+                <div className="dato-edit">
+                  <label htmlFor="username-edit">Apodo</label>
+                  <input
+                    defaultValue={miCuenta?.username}
+                    {...register("username")}
+                    id="username-edit"
+                  />
+                  {errors.username && (<span className="mensaje-error">{errors.username?.messaje}</span>)}
+                </div>
+                <div className="dato-edit">
+                  <label htmlFor="edit-email">E-mail</label>
+                  <input
+                    defaultValue={miCuenta?.email}
+                    type="email"
+                    {...register("email")}
+                    id="edit-email"
+                  />
+                </div>
+                <div className="dato-edit">
+                  <label htmlFor="edit-foto">Imagen de Perfil</label>
+                  <input
+                    defaultValue={miCuenta?.fotoPerfil}
+                    type="url"
+                    {...register("fotoPerfil")}
+                    id="edit-foto"
+                  />
+                </div>
+                <input type="submit" />
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" className="btn btn-primary">
+                Understood
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

@@ -57,7 +57,7 @@ const Login = () => {
           <div className="email-login">
             <label htmlFor="email">E-mail</label>
             <input
-              type="e-mal"
+              type="email"
               id="email-login"
               {...register("email")}
               autoComplete="on"
