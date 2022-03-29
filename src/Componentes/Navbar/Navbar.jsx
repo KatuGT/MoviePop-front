@@ -18,16 +18,15 @@ const Navbar = () => {
             `http://localhost:5002/api/usuario/find/${usuario?._id}`
           );
           setDatosActualesUsuario(datosUduarios?.data);
-        }else{
-          setDatosActualesUsuario([])
+        } else {
+          setDatosActualesUsuario([]);
         }
       } catch (error) {
         console.log(error);
       }
     }
-    
+
     getUsuario();
-    
   }, [usuario?._id, usuario]);
 
   let navigate = useNavigate();
@@ -43,10 +42,18 @@ const Navbar = () => {
       <nav>
         <div className="wrapper-login">
           {usuario !== null ? (
-            <NavLink to="/configuracion" className="registro link">
+            <NavLink to="/configuracion" className="registro link foto">
               <div className="usuario-nav">
-                <i className="fas fa-user-circle"></i>
-                <p>{datosActualesUsuario?.username}</p>
+                {datosActualesUsuario?.fotoPerfil ? (
+                  <>
+                  <img src={datosActualesUsuario?.fotoPerfil} alt="foto de perfil" />
+                  <h3>{datosActualesUsuario?.username}</h3>
+                  </>
+                ) : (
+                  <span className="default-foto">
+                      {datosActualesUsuario.username?.charAt(0)}
+                  </span>
+                )}
               </div>
             </NavLink>
           ) : (

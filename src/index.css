@@ -20,4 +20,9 @@ padding: 40px 20px;
     text-decoration: none;
 }
 
+a:focus,
+a:hover{
+    color: #c48900;
+}
+
 

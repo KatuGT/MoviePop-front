@@ -8,28 +8,29 @@ nav .link.active {
   color: #c48900;
 }
 
-.usuario-nav{
+.usuario-nav {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.usuario-nav p{
+.usuario-nav p {
   margin-left: 0.5em;
+  margin-bottom: 0;
 }
-.wrapper-login .link.active::before{
-    content: "";
-  background-color: #c48900;
-  height: 1px;
-  width: 100%;
-  bottom: 0;
-  position: absolute;
-  transform: scale(1);
-  transform-origin: left;
-  transition: transform 0.5s ease;
+
+p.link {
+  margin-bottom: 0;
+}
+p.link:hover {
+  color: #c48900;
 }
 
 .wrapper-login,
 .wrapper-home {
   display: flex;
   color: #fff;
+  justify-content: center;
+  align-items: center;
 }
 
 .wrapper-login {
@@ -46,20 +47,26 @@ nav .link.active {
   position: relative;
 }
 
-.wrapper-login .link::before {
-  content: "";
-  background-color: #c48900;
-  height: 1px;
-  width: 100%;
-  bottom: 0;
-  position: absolute;
-  transform: scale(0);
-  transform-origin: left;
-  transition: transform 0.5s ease;
-}
-
 .wrapper-login .link:hover::before {
   transform: scale(1);
 }
 
+.default-foto {
+  height: 1em;
+  aspect-ratio: 1/1;
+  background-color: rgb(84, 151, 240);
+  border-radius: 100em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  margin-bottom: 0;
+  align-items: center;
+  justify-content: center;
+}
 
+
+a.registro.link.foto.link.active,
+a.registro.link.foto.link:hover{
+  color: #fff;
+}

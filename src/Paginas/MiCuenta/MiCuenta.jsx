@@ -72,7 +72,7 @@ const MiCuenta = () => {
     watch,
   } = useForm({ resolver: yupResolver(esquemaActualisacionUsuario) });
 
-  const editContrasenia = watch("editContrasenia");
+ // const editContrasenia = watch("editContrasenia");
 
   //ACTUALIZAR MIS DATOS
    function editarUsuario(formData) {

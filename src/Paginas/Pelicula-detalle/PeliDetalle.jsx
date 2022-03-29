@@ -25,7 +25,7 @@ const PeliDetalle = () => {
   //agregar a favoritos
   const { usuario } = useContext(AutContext);
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
 
   const handleOnChange = () => {
     setIsChecked(!isChecked);
