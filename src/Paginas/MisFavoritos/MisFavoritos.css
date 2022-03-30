@@ -1,3 +1,16 @@
-.favorito-resaltar{
-    color: #fff;
+.contenedor-card div{
+position: relative;
+}
+
+
+.fa-minus-circle{
+    color: red;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.fa-minus-circle:hover{
+    transform: scale(1.4);
 }

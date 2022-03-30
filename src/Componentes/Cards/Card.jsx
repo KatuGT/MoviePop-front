@@ -6,16 +6,16 @@ const Card = (props) => {
   return (
     
       <Link
-        to={{ pathname: `/detalle/${props.pelicula?.id}` }}
+        to={{ pathname: `/detalle/${props.id}` }}
         className="link"
       >
         <div className="card-pelicula">
           <img
-            src={props.pelicula.image?.original || Cargando}
+            src={props.image || Cargando}
             alt="Imagen de Plicula"
             className="imagen-pelicula"
           />
-          <h4 className="titulo-pelicula">{props.pelicula?.name}</h4>
+          <h4 className="titulo-pelicula">{props.name}</h4>
         </div>
       </Link>
     

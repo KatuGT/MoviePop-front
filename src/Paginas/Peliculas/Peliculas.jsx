@@ -40,6 +40,7 @@ const Peliculas = () => {
     }
   }, [pagina, query]);
 
+  console.log(peliculas[0]);
   return (
     <>
       <Navbar />
@@ -68,7 +69,7 @@ const Peliculas = () => {
           hasMore={hasMore}
         >
           {peliculas?.map((pelicula, index) => (
-            <Card pelicula={pelicula} key={index} />
+            <Card id={pelicula.id} image={pelicula?.image.original} name={pelicula?.name} key={index} />
           ))}
         </InfiniteScroll>
       </div>

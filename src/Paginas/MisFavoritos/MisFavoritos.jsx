@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AutContext } from "../../Context/AutContext";
 // import Card from "../../Componentes/Cards/Card";
 import axios from "axios";
+import Card from "../../Componentes/Cards/Card";
 
 const MisFavoritos = () => {
   const { usuario } = useContext(AutContext);
@@ -27,33 +28,54 @@ const MisFavoritos = () => {
     }
 
     getUsuario();
-  }, [usuario?._id, usuario]);
+  }, [usuario?._id, usuario, misFavoritosID]);
 
   //GET PELICULAS
   const [arrayDePeliculas, setArrayDePeliculas] = useState([]);
 
+  function getPeliculas() {
+    const auxArray = [];
+    misFavoritosID.forEach((id) => {
+      auxArray.push(axios.get(`https://api.tvmaze.com/shows/${id}`));
+    });
+    Promise.all(auxArray).then((value) => {
+      const auxDataArray = value.map((v) => v.data);
+      setArrayDePeliculas(auxDataArray);
+    });
+  }
+
   useEffect(() => {
-    function getPeliculas() {
-      const auxArray = [];
-      misFavoritosID.forEach((id) => {
-        auxArray.push(axios.get(`https://api.tvmaze.com/shows/${id}`));
-      });
-      Promise.all(auxArray).then((value) => {
-        const auxDataArray = value.map((v) => v.data)
-        setArrayDePeliculas(auxDataArray);
-      });
-    }
     getPeliculas();
   }, [misFavoritosID]);
 
+  //borrar de favorito
+  async function BorrarFav(idPelicula) {
+    try {
+      await axios.delete(
+        `http://localhost:5002/api/usuario/${usuario?._id}/borrarpelicula/${idPelicula}`
+      );
+      getPeliculas()
+    } catch (error) {
+      console.log();
+    }
+  }
+
   return (
-    <>
+    <section className="contenedor-card">
       {arrayDePeliculas.map((pelicula, index) => (
-        <p className="favorito-resaltar" key={index}>
-          {pelicula.name}
-        </p>
+        <div key={index}>
+          <Card
+            id={pelicula.id}
+            image={pelicula?.image.original}
+            name={pelicula?.name}
+          />
+          <i
+            className="fas fa-minus-circle"
+            onClick={() => BorrarFav(pelicula.id)}
+          ></i>
+        </div>
       ))}
-    </>
+    </section>
   );
 };
 
