@@ -1,7 +1,7 @@
 import "./MisFavoritos.css";
 import { useContext, useEffect, useState } from "react";
 import { AutContext } from "../../Context/AutContext";
-import Card from "../../Componentes/Cards/Card";
+// import Card from "../../Componentes/Cards/Card";
 import axios from "axios";
 
 const MisFavoritos = () => {
@@ -30,40 +30,29 @@ const MisFavoritos = () => {
   }, [usuario?._id, usuario]);
 
   //GET PELICULAS
-  const [peliculas, setPeliculas] = useState([]);
+  const [arrayDePeliculas, setArrayDePeliculas] = useState([]);
+
   useEffect(() => {
-    async function getFilms() {
-      try {
-        await axios.get(`https://api.tvmaze.com/shows`).then((res) => {
-          setPeliculas(res.data);
-        });
-      } catch (error) {
-        console.log(error);
-      }
+    function getPeliculas() {
+      const auxArray = [];
+      misFavoritosID.forEach((id) => {
+        auxArray.push(axios.get(`https://api.tvmaze.com/shows/${id}`));
+      });
+      Promise.all(auxArray).then((value) => {
+        const auxDataArray = value.map((v) => v.data)
+        setArrayDePeliculas(auxDataArray);
+      });
     }
-    getFilms();
-  }, [setPeliculas]);
-
-  const arrayPeliculaID = [];
-
-  for (let index = 0; index < misFavoritosID.length; index++) {
-    const element = misFavoritosID[index];
-    const resultFilm = peliculas.filter((i) => i.id === element);
-    arrayPeliculaID.push(...resultFilm);
-  }
-
-  console.log(arrayPeliculaID);
+    getPeliculas();
+  }, [misFavoritosID]);
 
   return (
     <>
-      {misFavoritosID.map((id) => (
-        <p className="favorito-resaltar" key={id}>
-          {id}
+      {arrayDePeliculas.map((pelicula, index) => (
+        <p className="favorito-resaltar" key={index}>
+          {pelicula.name}
         </p>
       ))}
-      {/* {peliculas.map((pelicula) => (
-        <p>{pelicula?.name}</p>
-      ))} */}
     </>
   );
 };

@@ -27,7 +27,7 @@ const Navbar = () => {
     }
 
     getUsuario();
-  }, [usuario?._id, usuario, datosActualesUsuario]);
+  }, [usuario, setDatosActualesUsuario]);
 
   let navigate = useNavigate();
 
@@ -51,14 +51,18 @@ const Navbar = () => {
                       alt="foto de perfil"
                       className="foto-nav"
                     />
-                    <span className="nav-userneme">{datosActualesUsuario?.username}</span>
+                    <span className="nav-userneme">
+                      {datosActualesUsuario?.username}
+                    </span>
                   </>
                 ) : (
                   <>
                     <span className="default-foto">
                       {datosActualesUsuario.username?.charAt(0)}
                     </span>
-                    <span className="nav-userneme">{datosActualesUsuario?.username}</span>
+                    <span className="nav-userneme">
+                      {datosActualesUsuario?.username}
+                    </span>
                   </>
                 )}
               </div>

@@ -8,7 +8,7 @@ import Cargando from "../../Imagenes/cargando.svg";
 
 const Peliculas = () => {
   const [peliculas, setPeliculas] = useState([]);
-  const [pagina, setPagina] = useState(1);
+  const [pagina, setPagina] = useState(0);
   const [hasMore, setHasMore] = useState(true);
 
   //Busqueda
