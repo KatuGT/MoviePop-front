@@ -41,6 +41,7 @@ const ListaUsuarios = () => {
       .email("Ingrese un e-mail valido.")
       .required("Este campo es obligatorio"),
     fotoPerfil: yup.string().url("Ingrese un enlace valido."),
+    esAdmin: yup.boolean().required("Seleccione una opcion."),
     password: yup.string().when("editContrasenia", {
       is: true,
       then: yup
@@ -68,6 +69,7 @@ const ListaUsuarios = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schemaEditar) });
   const editContrasenia = watch("editContrasenia");
+
   //ACTUALIZAR USUARIO
   const editarUsuario = async (data) => {
     try {
@@ -101,6 +103,7 @@ const ListaUsuarios = () => {
       .email("ingrese un e-mail valido.")
       .required("Este campo es obligatorio"),
     fotoPerfil: yup.string().url("ingrese un enlace valido."),
+    esAdmin: yup.boolean().required("Seleccione una opcion."),
     password: yup
       .string()
       .required("Este campo es obligatorio")
@@ -126,18 +129,18 @@ const ListaUsuarios = () => {
   const [error, setError] = useState(false);
 
   const agregarUsuario = async (data) => {
-    setError(false)
+    setError(false);
     try {
       await axios.post("http://localhost:5002/api/aut/register", data);
-      toast.success('Usuario creado!',{
+      toast.success("Usuario creado!", {
         duration: 4000,
-        position: 'botton-center',
+        position: "botton-center",
       });
       reset();
-      getUsuarios()
+      getUsuarios();
     } catch (error) {
       console.log(error);
-      setError(error)
+      setError(error);
     }
   };
 
@@ -249,7 +252,6 @@ const ListaUsuarios = () => {
         console.log(error);
       }
     }
-   
   };
 
   return (
@@ -321,6 +323,33 @@ const ListaUsuarios = () => {
                     {...register("fotoPerfil")}
                     id="edit-foto-lista"
                   />
+                </div>
+                <div className="dato-edit">
+                  <p>Rol:</p>
+                  <div className="rol">
+                    <input
+                      type="radio"
+                      {...register("esAdmin")}
+                      id="rolUserEdit"
+                      value="false"
+                      defaultChecked={true}  
+                    />
+                    <label htmlFor="rolUserEdit">Usuario</label>
+                  </div>
+                  <div className="rol">
+                    <input
+                      type="radio"
+                      {...register("esAdmin")}
+                      id="roladminEdit"
+                      value="true"
+                    />
+                    <label htmlFor="roladminEdit">Admin</label>
+                  </div>
+                  {errors.esAdmin && (
+                        <span className="mensaje-error">
+                          {errors.esAdmin.message}
+                        </span>
+                      )}
                 </div>
                 <div className="condicional-contrasenia">
                   <input
@@ -447,6 +476,33 @@ const ListaUsuarios = () => {
                   />
                 </div>
                 <div className="dato-edit">
+                  <p>Rol:</p>
+                  <div className="rol">
+                    <input
+                      type="radio"
+                      {...registerAgregar("esAdmin")}
+                      id="rolUserCrear"
+                      value="false"
+                      defaultChecked={true}  
+                    />
+                    <label htmlFor="rolUserCrear">Usuario</label>
+                  </div>
+                  <div className="rol">
+                    <input
+                      type="radio"
+                      {...registerAgregar("esAdmin")}
+                      id="rolAdminCrear"
+                      value="true"
+                    />
+                    <label htmlFor="rolAdminCrear">Admin</label>
+                  </div>
+                  {errors.esAdmin && (
+                        <span className="mensaje-error">
+                          {errors.esAdmin.message}
+                        </span>
+                      )}
+                </div>
+                <div className="dato-edit">
                   <label htmlFor="contrasenia-nueva">Contraseña</label>
                   <input
                     className="nuevaContrasenia"
@@ -480,10 +536,7 @@ const ListaUsuarios = () => {
                     </span>
                   )}
                 </div>
-                <button
-                  type="submit"
-                  className="enviar-edit"          
-                >
+                <button type="submit" className="enviar-edit">
                   Enviar
                 </button>
                 {error && (
