@@ -1,6 +1,6 @@
 import "./ListaUsuarios.css";
 import axios from "axios";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AutContext } from "../../Context/AutContext";
 import { DataGrid } from "@mui/x-data-grid";
 import { useForm } from "react-hook-form";
@@ -29,8 +29,8 @@ const ListaUsuarios = () => {
     getUsuarios();
   }, []);
 
-  //Validacion
-  const schema = yup.object().shape({
+  //Validacion editar usuario
+  const schemaEditar = yup.object().shape({
     username: yup
       .string()
       .required("Este campo es obligatorio")
@@ -61,17 +61,15 @@ const ListaUsuarios = () => {
     }),
   });
 
-  //ACTUALIZAR MIS DATOS
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
-
+  } = useForm({ resolver: yupResolver(schemaEditar) });
   const editContrasenia = watch("editContrasenia");
-
-  const editarCuenta = async (data) => {
+  //ACTUALIZAR USUARIO
+  const editarUsuario = async (data) => {
     try {
       await axios.put(
         `http://localhost:5002/api/usuario/${usuarioSelect._id}`,
@@ -80,7 +78,7 @@ const ListaUsuarios = () => {
           headers: { token: usuario.accessToken },
         }
       );
-      getUsuarios()
+      getUsuarios();
       document.getElementById("boton-cerrar").click();
       toast.success("Edicion exitosa!", {
         duration: 4000,
@@ -90,6 +88,71 @@ const ListaUsuarios = () => {
       console.log(error);
     }
   };
+
+  //Validacion agregar usuario
+  const schemaAgregar = yup.object().shape({
+    username: yup
+      .string()
+      .required("Este campo es obligatorio")
+      .min(4, "Debe tener almenos 4 caracteres.")
+      .max(15, "Debe tener como máximo 15 caracteres."),
+    email: yup
+      .string()
+      .email("ingrese un e-mail valido.")
+      .required("Este campo es obligatorio"),
+    fotoPerfil: yup.string().url("ingrese un enlace valido."),
+    password: yup
+      .string()
+      .required("Este campo es obligatorio")
+      .min(8, "Debe tener almenos 8 caracteres")
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        "Almenos debe tener 1 letra y 1 numero"
+      ),
+    confirmPassword: yup
+      .string()
+      .required("Este campo es obligatorio")
+      .oneOf([yup.ref("password")], "Las contraseñas deben coincidir."),
+  });
+
+  const {
+    register: registerAgregar,
+    handleSubmit: handleSubmitAgregar,
+    formState: { errors: errorsAgregar },
+    reset,
+  } = useForm({ resolver: yupResolver(schemaAgregar) });
+
+  //AGREGAR USUARIO
+  const [error, setError] = useState(false);
+
+  const agregarUsuario = async (data) => {
+    setError(false)
+    try {
+      await axios.post("http://localhost:5002/api/aut/register", data);
+      toast.success('Usuario creado!',{
+        duration: 4000,
+        position: 'botton-center',
+      });
+      reset();
+      getUsuarios()
+    } catch (error) {
+      console.log(error);
+      setError(error)
+    }
+  };
+
+  //FLAS TABLAS
+  const rows = usuarios.map((usuario) => {
+    const listaActual = {
+      id: usuario._id,
+      apodo: usuario.username,
+      email: usuario.email,
+      avatar: usuario.fotoPerfil,
+      favoritos: usuario.favoritos,
+      esAdmin: usuario.esAdmin ? "Admin" : "Usuario",
+    };
+    return listaActual;
+  });
 
   //COLUMNAS TABLAS
   const columns = [
@@ -103,12 +166,16 @@ const ListaUsuarios = () => {
           <figure className="nombre-foto-row">
             {params.row.avatar !== "" ? (
               <img
-                className="foto-perfil"
+                className="foto-perfil-lista"
                 src={params.row.avatar}
                 alt="avatar"
               />
             ) : (
-              <i className="fas fa-user-circle"></i>
+              <>
+                <span className="default-foto-lista">
+                  {params.row.apodo.charAt(0)}
+                </span>
+              </>
             )}
 
             {params.row.apodo}
@@ -134,7 +201,7 @@ const ListaUsuarios = () => {
             <button
               className="btn"
               data-bs-toggle="modal"
-              data-bs-target="#staticBackdrop"
+              data-bs-target="#editarUsuario"
               onClick={() => findUsuarioEditar(params.row.id)}
             >
               <i className="fas fa-user-edit"></i>
@@ -164,19 +231,6 @@ const ListaUsuarios = () => {
     }
   };
 
-  //FLAS TABLAS
-  const rows = usuarios.map((usuario) => {
-    const listaActual = {
-      id: usuario._id,
-      apodo: usuario.username,
-      email: usuario.email,
-      avatar: usuario.fotoPerfil,
-      favoritos: usuario.favoritos,
-      esAdmin: usuario.esAdmin ? "Admin" : "Usuario",
-    };
-    return listaActual;
-  });
-
   ///borrar usuario
   const borrarItem = async (id) => {
     if (
@@ -187,18 +241,26 @@ const ListaUsuarios = () => {
           headers: { token: usuario.accessToken },
         });
         getUsuarios();
+        toast.error("Usuario borrado permanentemente.", {
+          position: "bottom-center",
+          style: { backgroundColor: "#FA392D", color: "#fff" },
+        });
       } catch (error) {
         console.log(error);
       }
     }
-    toast.error("Usuario borrado permanentemente.", {
-      position: "bottom-center",
-      style: { backgroundColor: "#FA392D", color: "#fff" },
-    });
+   
   };
 
   return (
     <div className="contenedor-data-grid">
+      <button
+        className="agregar-usuario"
+        data-bs-toggle="modal"
+        data-bs-target="#agregarUsuario"
+      >
+        Agregar nuevo
+      </button>
       <div className="data-grid" style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={rows}
@@ -207,21 +269,20 @@ const ListaUsuarios = () => {
           rowsPerPageOptions={[5]}
         />
       </div>
+      {/* MODAL EDITAR USUARIO */}
       <div
         className="modal fade"
-        id="staticBackdrop"
+        id="editarUsuario"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabIndex="-1"
-        aria-labelledby="staticBackdropLabel"
+        aria-labelledby="editarUsuario"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="staticBackdropLabel">
-                Editar
-              </h5>
+              <h5 className="modal-title">Editar</h5>
               <button
                 type="button"
                 className="btn-close"
@@ -230,7 +291,7 @@ const ListaUsuarios = () => {
               ></button>
             </div>
             <div className="modal-body">
-              <form onSubmit={handleSubmit(editarCuenta)}>
+              <form onSubmit={handleSubmit(editarUsuario)}>
                 <div className="dato-edit">
                   <label htmlFor="username-edit-lista">Apodo</label>
                   <input
@@ -240,7 +301,7 @@ const ListaUsuarios = () => {
                   />
                   {errors.username && (
                     <span className="mensaje-error">
-                      {errors.username?.messaje}
+                      {errors.username?.message}
                     </span>
                   )}
                 </div>
@@ -331,6 +392,120 @@ const ListaUsuarios = () => {
           </div>
         </div>
       </div>
+
+      {/* MODAL EDITAR USUARIO */}
+      <div
+        className="modal fade"
+        id="agregarUsuario"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                Ingrese los datos
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleSubmitAgregar(agregarUsuario)}>
+                <div className="dato-edit">
+                  <label htmlFor="username-nuevo">Apodo</label>
+                  <input id="username-nuevo" {...registerAgregar("username")} />
+                  {errorsAgregar.username && (
+                    <span className="mensaje-error">
+                      {errorsAgregar.username.message}
+                    </span>
+                  )}
+                </div>
+                <div className="dato-edit">
+                  <label htmlFor="email-nuevo">E-mail</label>
+                  <input
+                    type="email"
+                    id="email-nuevo"
+                    {...registerAgregar("email")}
+                  />
+                  {errorsAgregar.email && (
+                    <span className="mensaje-error">
+                      {errorsAgregar.email.message}
+                    </span>
+                  )}
+                </div>
+                <div className="dato-edit">
+                  <label htmlFor="foto-nueva">Imagen de Perfil</label>
+                  <input
+                    type="url"
+                    id="foto-nueva"
+                    {...registerAgregar("fotoPerfil")}
+                  />
+                </div>
+                <div className="dato-edit">
+                  <label htmlFor="contrasenia-nueva">Contraseña</label>
+                  <input
+                    className="nuevaContrasenia"
+                    type="password"
+                    placeholder="Nueva contraseña"
+                    autoComplete="off"
+                    id="contrasenia-nueva"
+                    {...registerAgregar("password")}
+                  />
+                  {errorsAgregar.password && (
+                    <span className="mensaje-error">
+                      {errorsAgregar.password.message}
+                    </span>
+                  )}
+                </div>
+                <div className="dato-edit">
+                  <label htmlFor="contrasenia-conf-nueva">
+                    Confirmación de contraseña
+                  </label>
+                  <input
+                    className="nuevaContraseniaConf"
+                    id="contrasenia-conf-nueva"
+                    type="password"
+                    autoComplete="off"
+                    placeholder="Repita la contraseña*"
+                    {...registerAgregar("confirmPassword")}
+                  />
+                  {errorsAgregar.confirmPwd && (
+                    <span className="mensaje-error">
+                      {errorsAgregar.confirmPwd.message}
+                    </span>
+                  )}
+                </div>
+                <button
+                  type="submit"
+                  className="enviar-edit"          
+                >
+                  Enviar
+                </button>
+                {error && (
+                  <p className="mensaje-error">
+                    Puede que el apodo o email ya esten en uso.
+                  </p>
+                )}
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Toaster />
     </div>
   );

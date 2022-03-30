@@ -75,7 +75,6 @@ const MiCuenta = () => {
   const editContrasenia = watch("editContrasenia");
 
   const editarCuenta = async (data) => {
-    
     try {
       await axios.put(
         `http://localhost:5002/api/usuario/${usuario._id}`,
@@ -121,7 +120,7 @@ const MiCuenta = () => {
               {miCuenta?.esAdmin ? "Administrador" : "Usuario"}
             </p>
           </div>
-         
+
           <button
             type="button"
             className="editar-datos"
@@ -164,9 +163,9 @@ const MiCuenta = () => {
                     {...register("username")}
                     id="username-edit"
                   />
-                  {errors.username && (
+                  {errors?.username && (
                     <span className="mensaje-error">
-                      {errors.username?.messaje}
+                      {errors.username?.message}
                     </span>
                   )}
                 </div>
@@ -189,56 +188,57 @@ const MiCuenta = () => {
                   />
                 </div>
                 <div className="condicional-contrasenia">
-            <input
-              id="editContrasenia"
-              type="checkbox"
-              name="editContrasenia"
-              {...register("editContrasenia")}
-            />
-            <label htmlFor="editContrasenia">Deseo editar contraseña</label>
-          </div>
-          {editContrasenia && (
-            <>
-              <div className="dato-edit">
-                <label htmlFor="contrasenia">Contraseña nueva</label>
-                <input
-                  className="nuevaContrasenia"
-                  type="password"
-                  placeholder="Nueva contraseña"
-                  autoComplete="off"
-                  id="contrasenia"
-                  {...register("password")}
-                />                
-                {errors.password && (
-                  <span className="mensaje-error">
-                    {errors.password.message}
-                  </span>
+                  <input
+                    id="editContrasenia"
+                    type="checkbox"
+                    name="editContrasenia"
+                    {...register("editContrasenia")}
+                  />
+                  <label htmlFor="editContrasenia">
+                    Deseo editar contraseña
+                  </label>
+                </div>
+                {editContrasenia && (
+                  <>
+                    <div className="dato-edit">
+                      <label htmlFor="contrasenia">Contraseña nueva</label>
+                      <input
+                        className="nuevaContrasenia"
+                        type="password"
+                        placeholder="Nueva contraseña"
+                        autoComplete="off"
+                        id="contrasenia"
+                        {...register("password")}
+                      />
+                      {errors.password && (
+                        <span className="mensaje-error">
+                          {errors.password.message}
+                        </span>
+                      )}
+                    </div>
+                    <div className="dato-edit">
+                      <label htmlFor="nuevaContraseniaConf">
+                        Confirmación de nueva contraseña
+                      </label>
+                      <input
+                        className="nuevaContraseniaConf"
+                        id="nuevaContraseniaConf"
+                        type="password"
+                        autoComplete="off"
+                        placeholder="Repita la contraseña*"
+                        {...register("confirmPwd")}
+                      />
+
+                      {errors.confirmPwd && (
+                        <span className="mensaje-error">
+                          {errors.confirmPwd.message}
+                        </span>
+                      )}
+                    </div>
+                  </>
                 )}
-              </div>
-              <div className="dato-edit">
-                <label htmlFor="nuevaContraseniaConf">
-                  Confirmación de nueva contraseña
-                </label>
-                <input
-                  className="nuevaContraseniaConf"
-                  id="nuevaContraseniaConf"
-                  type="password"
-                  autoComplete="off"
-                  placeholder="Repita la contraseña*"
-                  {...register("confirmPwd")}
-                />
-                
-                {errors.confirmPwd && (
-                  <span className="mensaje-error">
-                    {errors.confirmPwd.message}
-                  </span>
-                )}
-              </div>
-            </>
-          )}
-                <button type="submit" className="enviar-edit">
-                  {" "}
-                  Enviar{" "}
+                <button type="submit" className="enviar-edit">                  
+                  Enviar
                 </button>
               </form>
             </div>

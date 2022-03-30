@@ -1,7 +1,9 @@
 .contenedor-data-grid{
     margin-top: 1em;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    height: 100%;;
 }
 
 
@@ -10,10 +12,33 @@
 }
 .nombre-foto-row{
     margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.nombre-foto-row .foto-perfil,
+.nombre-foto-row .foto-perfil-lista,
 .nombre-foto-row .fa-user-circle{
     margin-right: 0.5em;
+}
+
+.foto-perfil-lista{
+    height: 40px;
+    width: 40px;
+    border-radius: 100vh;
+    object-fit: cover;
+}
+
+.default-foto-lista{
+    height: 40px;
+    width: 40px;
+    background-color: rgb(120, 175, 247);
+    border-radius: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    color: #fff;
+    margin-right: 0.2em;
 }
 
 .acciones .fas{
@@ -34,4 +59,11 @@
 .acciones .fa-trash-alt:hover,
 .acciones .fa-user-edit:hover{
     color: #41739f;
+}
+
+.contenedor-data-grid button.agregar-usuario{
+    margin-bottom: 1em;
+    border:none;
+    width: max-content;
+    padding: 0.4em 1.5em;
 }
