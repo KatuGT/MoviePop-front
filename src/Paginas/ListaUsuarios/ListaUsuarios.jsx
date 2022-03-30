@@ -66,6 +66,7 @@ const ListaUsuarios = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schemaEditar) });
   const editContrasenia = watch("editContrasenia");
@@ -86,6 +87,7 @@ const ListaUsuarios = () => {
         duration: 4000,
         position: "botton-center",
       });
+      reset();
     } catch (error) {
       console.log(error);
     }
@@ -122,7 +124,7 @@ const ListaUsuarios = () => {
     register: registerAgregar,
     handleSubmit: handleSubmitAgregar,
     formState: { errors: errorsAgregar },
-    reset,
+    reset: resetAgregar,
   } = useForm({ resolver: yupResolver(schemaAgregar) });
 
   //AGREGAR USUARIO
@@ -136,7 +138,7 @@ const ListaUsuarios = () => {
         duration: 4000,
         position: "botton-center",
       });
-      reset();
+      resetAgregar();
       getUsuarios();
     } catch (error) {
       console.log(error);
@@ -332,7 +334,7 @@ const ListaUsuarios = () => {
                       {...register("esAdmin")}
                       id="rolUserEdit"
                       value="false"
-                      defaultChecked={true}  
+                      defaultChecked={true}
                     />
                     <label htmlFor="rolUserEdit">Usuario</label>
                   </div>
@@ -346,10 +348,10 @@ const ListaUsuarios = () => {
                     <label htmlFor="roladminEdit">Admin</label>
                   </div>
                   {errors.esAdmin && (
-                        <span className="mensaje-error">
-                          {errors.esAdmin.message}
-                        </span>
-                      )}
+                    <span className="mensaje-error">
+                      {errors.esAdmin.message}
+                    </span>
+                  )}
                 </div>
                 <div className="condicional-contrasenia">
                   <input
@@ -414,6 +416,9 @@ const ListaUsuarios = () => {
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
                 id="boton-cerrar"
+                onClick={() => {
+                  reset();
+                }}
               >
                 Cerrar
               </button>
@@ -483,7 +488,7 @@ const ListaUsuarios = () => {
                       {...registerAgregar("esAdmin")}
                       id="rolUserCrear"
                       value="false"
-                      defaultChecked={true}  
+                      defaultChecked={true}
                     />
                     <label htmlFor="rolUserCrear">Usuario</label>
                   </div>
@@ -497,10 +502,10 @@ const ListaUsuarios = () => {
                     <label htmlFor="rolAdminCrear">Admin</label>
                   </div>
                   {errors.esAdmin && (
-                        <span className="mensaje-error">
-                          {errors.esAdmin.message}
-                        </span>
-                      )}
+                    <span className="mensaje-error">
+                      {errors.esAdmin.message}
+                    </span>
+                  )}
                 </div>
                 <div className="dato-edit">
                   <label htmlFor="contrasenia-nueva">Contraseña</label>
@@ -551,6 +556,9 @@ const ListaUsuarios = () => {
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
+                onClick={() => {
+                  resetAgregar();
+                }}
               >
                 Cerrar
               </button>

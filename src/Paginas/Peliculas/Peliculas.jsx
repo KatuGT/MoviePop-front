@@ -40,7 +40,6 @@ const Peliculas = () => {
     }
   }, [pagina, query]);
 
-  console.log(peliculas[0]);
   return (
     <>
       <Navbar />

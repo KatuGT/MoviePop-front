@@ -73,7 +73,7 @@ const Navbar = () => {
             </NavLink>
           )}
           {usuario !== null ? (
-            <p onClick={handleLogout} className="link">
+            <p onClick={handleLogout} className="link cerrar-sesion">
               Cerrar sesión
             </p>
           ) : (

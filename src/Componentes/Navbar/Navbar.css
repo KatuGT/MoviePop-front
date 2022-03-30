@@ -81,3 +81,7 @@ a.registro.link.foto.link:hover{
   object-fit: cover;
   margin-right: 0.5em;
 }
+
+p.cerrar-sesion{
+  cursor: pointer;
+}
