@@ -8,7 +8,9 @@
 .data-grid {
   background-color: rgb(218, 218, 218);
 }
-
+.nombre-foto-row{
+    margin-bottom: 0;
+}
 .nombre-foto-row .foto-perfil,
 .nombre-foto-row .fa-user-circle{
     margin-right: 0.5em;

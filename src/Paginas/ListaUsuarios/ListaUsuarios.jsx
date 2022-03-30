@@ -73,13 +73,14 @@ const ListaUsuarios = () => {
 
   const editarCuenta = async (data) => {
     try {
-      await axios.get(
-        `http://localhost:5002/api/usuario/${usuario._id}`,
+      await axios.put(
+        `http://localhost:5002/api/usuario/${usuarioSelect._id}`,
         data,
         {
           headers: { token: usuario.accessToken },
         }
       );
+      getUsuarios()
       document.getElementById("boton-cerrar").click();
       toast.success("Edicion exitosa!", {
         duration: 4000,
@@ -130,10 +131,14 @@ const ListaUsuarios = () => {
         return (
           // BOTON EDITAR
           <div className="acciones">
-            <i
-              className="fas fa-user-edit"
+            <button
+              className="btn"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
               onClick={() => findUsuarioEditar(params.row.id)}
-            ></i>
+            >
+              <i className="fas fa-user-edit"></i>
+            </button>
 
             {/* BOTON BORRAR */}
             <i
@@ -147,7 +152,6 @@ const ListaUsuarios = () => {
   ];
 
   const [usuarioSelect, setUsuarioSelect] = useState([]);
-
   const findUsuarioEditar = async (id) => {
     try {
       await axios
@@ -159,8 +163,6 @@ const ListaUsuarios = () => {
       console.log();
     }
   };
-
-  console.log(usuarioSelect);
 
   //FLAS TABLAS
   const rows = usuarios.map((usuario) => {
@@ -230,8 +232,12 @@ const ListaUsuarios = () => {
             <div className="modal-body">
               <form onSubmit={handleSubmit(editarCuenta)}>
                 <div className="dato-edit">
-                  <label htmlFor="username-edit">Apodo</label>
-                  <input {...register("username")} id="username-edit" />
+                  <label htmlFor="username-edit-lista">Apodo</label>
+                  <input
+                    {...register("username")}
+                    id="username-edit-lista"
+                    defaultValue={usuarioSelect?.username}
+                  />
                   {errors.username && (
                     <span className="mensaje-error">
                       {errors.username?.messaje}
@@ -239,15 +245,20 @@ const ListaUsuarios = () => {
                   )}
                 </div>
                 <div className="dato-edit">
-                  <label htmlFor="edit-email">E-mail</label>
-                  <input type="email" {...register("email")} id="edit-email" />
+                  <label htmlFor="edit-email-lista">E-mail</label>
+                  <input
+                    type="email"
+                    {...register("email")}
+                    id="edit-email-lista"
+                    defaultValue={usuarioSelect?.email}
+                  />
                 </div>
                 <div className="dato-edit">
-                  <label htmlFor="edit-foto">Imagen de Perfil</label>
+                  <label htmlFor="edit-foto-lista">Imagen de Perfil</label>
                   <input
                     type="url"
                     {...register("fotoPerfil")}
-                    id="edit-foto"
+                    id="edit-foto-lista"
                   />
                 </div>
                 <div className="condicional-contrasenia">
@@ -264,13 +275,15 @@ const ListaUsuarios = () => {
                 {editContrasenia && (
                   <>
                     <div className="dato-edit">
-                      <label htmlFor="contrasenia">Contraseña nueva</label>
+                      <label htmlFor="contrasenia-lista">
+                        Contraseña nueva
+                      </label>
                       <input
                         className="nuevaContrasenia"
                         type="password"
                         placeholder="Nueva contraseña"
                         autoComplete="off"
-                        id="contrasenia"
+                        id="contrasenia-lista"
                         {...register("password")}
                       />
                       {errors.password && (
@@ -280,12 +293,12 @@ const ListaUsuarios = () => {
                       )}
                     </div>
                     <div className="dato-edit">
-                      <label htmlFor="nuevaContraseniaConf">
+                      <label htmlFor="nuevaContraseniaLista">
                         Confirmación de nueva contraseña
                       </label>
                       <input
                         className="nuevaContraseniaConf"
-                        id="nuevaContraseniaConf"
+                        id="nuevaContraseniaLista"
                         type="password"
                         autoComplete="off"
                         placeholder="Repita la contraseña*"
@@ -301,8 +314,7 @@ const ListaUsuarios = () => {
                   </>
                 )}
                 <button type="submit" className="enviar-edit">
-                  {" "}
-                  Enviar{" "}
+                  Enviar
                 </button>
               </form>
             </div>
