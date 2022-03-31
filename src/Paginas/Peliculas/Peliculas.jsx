@@ -36,7 +36,7 @@ const Peliculas = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [pagina, query, hasMore]);
+  }, [pagina, query]);
 
   return (
     <>
