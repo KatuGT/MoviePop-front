@@ -58,6 +58,61 @@ const Rating = ({rating}) => {
           }
         ></i>
       </span>
+      <span>
+        <i
+          className={
+            rating >= 6
+              ? 'fas fa-star'
+              : rating >= 5.5
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+          }
+        ></i>
+      </span>
+      <span>
+        <i
+          className={
+            rating >= 7
+              ? 'fas fa-star'
+              : rating >= 6.5
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+          }
+        ></i>
+      </span>
+      <span>
+        <i
+          className={
+            rating >= 8
+              ? 'fas fa-star'
+              : rating >= 7.5
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+          }
+        ></i>
+      </span>
+      <span>
+        <i
+          className={
+            rating >= 9
+              ? 'fas fa-star'
+              : rating >= 8.5
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+          }
+        ></i>
+      </span>
+      <span>
+        <i
+          className={
+            rating >= 10
+              ? 'fas fa-star'
+              : rating >= 9.5
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+          }
+        ></i>
+      </span>
     </div>
   )
 }

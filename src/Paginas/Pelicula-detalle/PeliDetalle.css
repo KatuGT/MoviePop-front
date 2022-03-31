@@ -46,7 +46,17 @@
   font-size: 14px;
 }
 
+.contenedor-imagen{
+  flex: 1;
+}
+
+.contenedor-detalle{
+  flex: 2;
+}
+
+
 @media screen and (min-width: 1000px) {
+
   .contenedor-peli-detalle {
     margin-top: 1em;
     display: flex;

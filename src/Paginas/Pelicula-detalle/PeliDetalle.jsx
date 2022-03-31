@@ -5,7 +5,7 @@ import Cargando from "../../Imagenes/cargando.svg";
 import { AutContext } from "../../Context/AutContext";
 import { useContext } from "react";
 import axios from "axios";
-// import Rating from "../../Componentes/Rating/Rating";
+import Rating from "../../Componentes/Rating/Rating";
 
 const PeliDetalle = () => {
   let { id } = useParams();
@@ -25,27 +25,7 @@ const PeliDetalle = () => {
     getPelicula();
   }, [id]);
 
-  console.log(pelicula);
-
-  const [misFavoritosID, setMisFavoritosID] = useState([]);
-  useEffect(() => {
-    async function getUsuario() {
-      try {
-        if (usuario !== null) {
-          const datosUsuarios = await axios.get(
-            `https://movie-pop-back.herokuapp.com/api/usuario/find/${usuario?._id}`
-          );
-          setMisFavoritosID(datosUsuarios?.data.favoritos);
-        } else {
-          setMisFavoritosID([]);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getUsuario();
-  }, [usuario]);
-
+  
   const [isChecked, setIsChecked] = useState();
 
   //agregar a favoritos
@@ -72,12 +52,13 @@ const PeliDetalle = () => {
         <i className="fas fa-arrow-left"></i>
       </Link>
       <div className="contenedor-peli-detalle">
-        <figure>
+        <figure className="contenedor-imagen">
           <img
             src={pelicula?.image?.original || Cargando}
             alt="Imagen de Plicula"
             className="imagen-pelicula-detalle"
           />
+         <Rating rating={pelicula?.rating?.average} />
         </figure>
         <section className="contenedor-detalle">
           <h3 className="titulo-peli-detalle">{pelicula?.name}</h3>
@@ -138,7 +119,7 @@ const PeliDetalle = () => {
               </label>
             )}
           </div>
-          {/* <Rating rating={pelicula?.rating.average}/> */}
+          
         </section>
       </div>
     </>
