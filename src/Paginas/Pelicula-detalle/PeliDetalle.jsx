@@ -13,19 +13,19 @@ const PeliDetalle = () => {
 
   const [pelicula, setPelicula] = useState([]);
 
-  const getPelicula = async () => {
-    try {
-      const pelicula = await axios.get(`https://api.tvmaze.com/shows/${id}`);
-      setPelicula(pelicula.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
 
   useEffect(() => {
+    const getPelicula = async () => {
+      try {
+        const pelicula = await axios.get(`https://api.tvmaze.com/shows/${id}`);
+        setPelicula(pelicula.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getPelicula();
-    // eslint-disable-next-line
-  }, [setPelicula, id, pelicula]);
+  }, [id, pelicula]);
 
   console.log(pelicula);
 
