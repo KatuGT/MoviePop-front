@@ -46,6 +46,7 @@ const MisFavoritos = () => {
 
   useEffect(() => {
     getPeliculas();
+    // eslint-disable-next-line
   }, [misFavoritosID]);
 
   //borrar de favorito

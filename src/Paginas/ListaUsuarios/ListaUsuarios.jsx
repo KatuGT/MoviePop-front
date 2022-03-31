@@ -27,6 +27,7 @@ const ListaUsuarios = () => {
 
   useEffect(() => {
     getUsuarios();
+    // eslint-disable-next-line
   }, []);
 
   //Validacion editar usuario
