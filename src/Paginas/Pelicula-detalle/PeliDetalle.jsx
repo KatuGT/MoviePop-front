@@ -1,11 +1,11 @@
 import "./PeliDetalle.css";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Axios from "axios";
 import Cargando from "../../Imagenes/cargando.svg";
 import { AutContext } from "../../Context/AutContext";
 import { useContext } from "react";
 import axios from "axios";
+import Rating from "../../Componentes/Rating/Rating";
 
 const PeliDetalle = () => {
   let { id } = useParams();
@@ -13,19 +13,20 @@ const PeliDetalle = () => {
 
   const [pelicula, setPelicula] = useState([]);
 
+  const getPelicula = async () => {
+    try {
+      const pelicula = await axios.get(`https://api.tvmaze.com/shows/${id}`);
+      setPelicula(pelicula.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const getPelicula = async () => {
-      try {
-        const pelicula = await Axios.get(`https://api.tvmaze.com/shows/${id}`);
-        setPelicula(pelicula.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getPelicula();
-  }, [id]);
+  }, [setPelicula, id, pelicula]);
 
-
+  console.log(pelicula);
 
   const [misFavoritosID, setMisFavoritosID] = useState([]);
   useEffect(() => {
@@ -53,28 +54,22 @@ const PeliDetalle = () => {
     setIsChecked(boolean);
   }, [isChecked, id, misFavoritosID]);
 
-
-
-    //agregar a favoritos
-    async function agregarBorrarFav(idPelicula) {
-      try {
-        if (!isChecked) {
-          await Axios.post(
-            `http://localhost:5002/api/usuario/${usuario?._id}/addfavorito/${idPelicula}`
-          );
-        } else {
-          await Axios.delete(
-            `http://localhost:5002/api/usuario/${usuario?._id}/borrarpelicula/${idPelicula}`
-          );
-        }
-      } catch (error) {
-        console.log();
+  //agregar a favoritos
+  async function agregarBorrarFav(idPelicula) {
+    try {
+      if (!isChecked) {
+        await axios.post(
+          `http://localhost:5002/api/usuario/${usuario?._id}/addfavorito/${idPelicula}`
+        );
+      } else {
+        await axios.delete(
+          `http://localhost:5002/api/usuario/${usuario?._id}/borrarpelicula/${idPelicula}`
+        );
       }
+    } catch (error) {
+      console.log();
     }
-
-  // const handleOnChange = () => {
-  //   setIsChecked(!isChecked);
-  // };
+  }
 
   return (
     <>
@@ -127,12 +122,7 @@ const PeliDetalle = () => {
           <h3 className="titulo-peli-detalle sinopsis">Sinopsis</h3>
           <p className="sinopsis-texto">{pelicula?.summary}</p>
           <div className="contenedor-favoritos">
-            <input
-              id={`peli${id}`}
-              type="checkbox"
-              //onChange={handleOnChange}
-              checked={isChecked}
-            />
+            <input id={`peli${id}`} type="checkbox" checked={isChecked} />
             {isChecked ? (
               <label
                 className="agregarFav"
@@ -141,7 +131,6 @@ const PeliDetalle = () => {
               >
                 <i className="fas fa-heart "></i>
                 <p>Quitar de favoritos</p>
-                
               </label>
             ) : (
               <label
@@ -154,6 +143,7 @@ const PeliDetalle = () => {
               </label>
             )}
           </div>
+          {/* <Rating rating={pelicula?.rating.average}/> */}
         </section>
       </div>
     </>

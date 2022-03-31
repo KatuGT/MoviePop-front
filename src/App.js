@@ -16,6 +16,7 @@ import UsuarioConfig from "./Paginas/UsuarioConfig/UsuarioConfig.jsx";
 import MiCuenta from "./Paginas/MiCuenta/MiCuenta.jsx";
 import MisFavoritos from "./Paginas/MisFavoritos/MisFavoritos.jsx";
 import ListaUsuarios from "./Paginas/ListaUsuarios/ListaUsuarios.jsx";
+import Error404 from "./Paginas/Error404/Error404.jsx";
 
 function App() {
   const { usuario } = useContext(AutContext);
@@ -54,6 +55,7 @@ function App() {
             path="detalle/:id"
             element={!usuario ? <Navigate to="/rl/login" /> : <PeliDetalle />}
           />
+        <Route path="*" element={<Error404/>}/>
         </Routes>
       </Router>
     </div>

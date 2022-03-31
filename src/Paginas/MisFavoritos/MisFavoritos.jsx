@@ -54,7 +54,7 @@ const MisFavoritos = () => {
       await axios.delete(
         `http://localhost:5002/api/usuario/${usuario?._id}/borrarpelicula/${idPelicula}`
       );
-      getPeliculas()
+      getPeliculas();
     } catch (error) {
       console.log();
     }

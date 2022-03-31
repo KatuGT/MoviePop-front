@@ -1,0 +1,17 @@
+.contenedor-error{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.contenedor-error img{
+    max-width: 60%;
+    filter: saturate(0);
+}
+
+.contenedor-error span,
+.contenedor-error a{
+font-size: 3em;
+color:  #fff;
+}
