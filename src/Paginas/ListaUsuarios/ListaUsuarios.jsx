@@ -16,7 +16,7 @@ const ListaUsuarios = () => {
   const getUsuarios = async () => {
     try {
       await axios
-        .get(`http://localhost:5002/api/usuario`, {
+        .get(`https://movie-pop-back.herokuapp.com/api/usuario`, {
           headers: { token: usuario.accessToken },
         })
         .then((res) => setUsuarios(res.data));
@@ -75,7 +75,7 @@ const ListaUsuarios = () => {
   const editarUsuario = async (data) => {
     try {
       await axios.put(
-        `http://localhost:5002/api/usuario/${usuarioSelect._id}`,
+        `https://movie-pop-back.herokuapp.com/api/usuario/${usuarioSelect._id}`,
         data,
         {
           headers: { token: usuario.accessToken },
@@ -133,7 +133,7 @@ const ListaUsuarios = () => {
   const agregarUsuario = async (data) => {
     setError(false);
     try {
-      await axios.post("http://localhost:5002/api/aut/register", data);
+      await axios.post("https://movie-pop-back.herokuapp.com/api/aut/register", data);
       toast.success("Usuario creado!", {
         duration: 4000,
         position: "botton-center",
@@ -227,7 +227,7 @@ const ListaUsuarios = () => {
   const findUsuarioEditar = async (id) => {
     try {
       await axios
-        .get(`http://localhost:5002/api/usuario/find/${id}`)
+        .get(`https://movie-pop-back.herokuapp.com/api/usuario/find/${id}`)
         .then((res) => {
           setUsuarioSelect(res.data);
         });
@@ -242,7 +242,7 @@ const ListaUsuarios = () => {
       window.confirm("¿Estas seguro de borrar este usuario? Es Permanente.")
     ) {
       try {
-        await axios.delete(`http://localhost:5002/api/usuario/${id}`, {
+        await axios.delete(`https://movie-pop-back.herokuapp.com/api/usuario/${id}`, {
           headers: { token: usuario.accessToken },
         });
         getUsuarios();

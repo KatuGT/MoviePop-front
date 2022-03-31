@@ -15,7 +15,7 @@ const Navbar = () => {
       try {
         if (usuario !== null) {
           const datosUduarios = await axios.get(
-            `http://localhost:5002/api/usuario/find/${usuario?._id}`
+            `https://movie-pop-back.herokuapp.com/api/usuario/find/${usuario?._id}`
           );
           setDatosActualesUsuario(datosUduarios?.data);
         } else {
