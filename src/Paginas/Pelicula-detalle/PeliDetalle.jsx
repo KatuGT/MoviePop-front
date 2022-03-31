@@ -12,9 +12,7 @@ const PeliDetalle = () => {
   const { usuario } = useContext(AutContext);
 
   const [pelicula, setPelicula] = useState([]);
-
-  
-
+ 
   useEffect(() => {
     const getPelicula = async () => {
       try {
@@ -25,7 +23,7 @@ const PeliDetalle = () => {
       }
     };
     getPelicula();
-  }, [id, pelicula]);
+  }, [id]);
 
   console.log(pelicula);
 
@@ -45,15 +43,10 @@ const PeliDetalle = () => {
         console.log(error);
       }
     }
-
     getUsuario();
-  }, [usuario, misFavoritosID]);
+  }, [usuario]);
 
   const [isChecked, setIsChecked] = useState();
-  useEffect(() => {
-    let boolean = misFavoritosID?.includes(id);
-    setIsChecked(boolean);
-  }, [isChecked, id, misFavoritosID]);
 
   //agregar a favoritos
   async function agregarBorrarFav(idPelicula) {
@@ -67,6 +60,7 @@ const PeliDetalle = () => {
           `https://movie-pop-back.herokuapp.com/api/usuario/${usuario?._id}/borrarpelicula/${idPelicula}`
         );
       }
+      setIsChecked(!isChecked)
     } catch (error) {
       console.log();
     }
@@ -80,7 +74,7 @@ const PeliDetalle = () => {
       <div className="contenedor-peli-detalle">
         <figure>
           <img
-            src={pelicula.image?.original || Cargando}
+            src={pelicula?.image?.original || Cargando}
             alt="Imagen de Plicula"
             className="imagen-pelicula-detalle"
           />
