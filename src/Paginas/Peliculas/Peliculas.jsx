@@ -9,7 +9,6 @@ import Cargando from "../../Imagenes/cargando.svg";
 const Peliculas = () => {
   const [peliculas, setPeliculas] = useState([]);
   const [pagina, setPagina] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
 
   //Busqueda
   const [query, setQuery] = useState("");
@@ -27,7 +26,6 @@ const Peliculas = () => {
       ).then((res) => {
         if (!query) {
           setPeliculas((prevPeliculas) => prevPeliculas.concat(res.data));
-          setHasMore(res.data.totalPages >= res.pageToLoad);
         } else {
           const auxArray = res.data.map((pelicula) => {
             return pelicula.show;
@@ -38,8 +36,8 @@ const Peliculas = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [pagina, query]);
-console.log(peliculas);
+  }, [pagina, query, hasMore]);
+
   return (
     <>
       <Navbar />
@@ -58,7 +56,7 @@ console.log(peliculas);
           dataLength={peliculas.length}
           className="contenedor-card"
           next={() => setPagina((prevPagina) => prevPagina + 1)}
-          hasMore={hasMore}
+          hasMore={true}
           loader={
             <img
               className="cargando-peliculas"
