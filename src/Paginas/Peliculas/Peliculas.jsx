@@ -39,7 +39,7 @@ const Peliculas = () => {
       console.log(error);
     }
   }, [pagina, query]);
-
+console.log(peliculas);
   return (
     <>
       <Navbar />
@@ -58,6 +58,7 @@ const Peliculas = () => {
           dataLength={peliculas.length}
           className="contenedor-card"
           next={() => setPagina((prevPagina) => prevPagina + 1)}
+          hasMore={hasMore}
           loader={
             <img
               className="cargando-peliculas"
@@ -65,7 +66,6 @@ const Peliculas = () => {
               alt="icono cargando"
             />
           }
-          hasMore={hasMore}
         >
           {peliculas?.map((pelicula, index) => (
             <Card id={pelicula?.id} image={pelicula?.image?.original} name={pelicula?.name} key={index} />
