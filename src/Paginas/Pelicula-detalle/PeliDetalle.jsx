@@ -5,7 +5,7 @@ import Cargando from "../../Imagenes/cargando.svg";
 import { AutContext } from "../../Context/AutContext";
 import { useContext } from "react";
 import axios from "axios";
-import Rating from "../../Componentes/Rating/Rating";
+// import Rating from "../../Componentes/Rating/Rating";
 
 const PeliDetalle = () => {
   let { id } = useParams();
@@ -24,7 +24,7 @@ const PeliDetalle = () => {
 
   useEffect(() => {
     getPelicula();
-  }, [setPelicula, id, pelicula]);
+  }, [id]);
 
   console.log(pelicula);
 
