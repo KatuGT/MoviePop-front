@@ -68,7 +68,7 @@ const Peliculas = () => {
           hasMore={hasMore}
         >
           {peliculas?.map((pelicula, index) => (
-            <Card id={pelicula.id} image={pelicula?.image.original} name={pelicula?.name} key={index} />
+            <Card id={pelicula?.id} image={pelicula?.image?.original} name={pelicula?.name} key={index} />
           ))}
         </InfiniteScroll>
       </div>
