@@ -39,7 +39,7 @@ function App() {
           >
             <Route path="mi-cuenta/:id" element={<MiCuenta/>}/>
             <Route path="favoritos" element={<MisFavoritos/>}/>
-            <Route path="lista-usuarios" element={<ListaUsuarios/>}/>
+           {usuario?.esAdmin && <Route path="lista-usuarios" element={<ListaUsuarios/>}/> } 
           </Route>
           <Route path="rl" element={<LoginRegistro />}>
             <Route
