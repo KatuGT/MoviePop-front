@@ -34,7 +34,7 @@ const PeliDetalle = () => {
       try {
         if (usuario !== null) {
           const datosUsuarios = await axios.get(
-            `http://localhost:5002/api/usuario/find/${usuario?._id}`
+            `https://movie-pop-back.herokuapp.com/api/usuario/find/${usuario?._id}`
           );
           setMisFavoritosID(datosUsuarios?.data.favoritos);
         } else {
@@ -59,11 +59,11 @@ const PeliDetalle = () => {
     try {
       if (!isChecked) {
         await axios.post(
-          `http://localhost:5002/api/usuario/${usuario?._id}/addfavorito/${idPelicula}`
+          `https://movie-pop-back.herokuapp.com/api/usuario/${usuario?._id}/addfavorito/${idPelicula}`
         );
       } else {
         await axios.delete(
-          `http://localhost:5002/api/usuario/${usuario?._id}/borrarpelicula/${idPelicula}`
+          `https://movie-pop-back.herokuapp.com/api/usuario/${usuario?._id}/borrarpelicula/${idPelicula}`
         );
       }
     } catch (error) {

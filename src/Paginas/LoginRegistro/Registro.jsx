@@ -43,7 +43,7 @@ const Registro = () => {
   async function handleRegistro(formData) {
     setError(false)
     try {
-      await axios.post("http://localhost:5002/api/aut/register", formData);
+      await axios.post("https://movie-pop-back.herokuapp.com/api/aut/register", formData);
       toast.success('Usuario creado!',{
         duration: 4000,
         position: 'botton-center',

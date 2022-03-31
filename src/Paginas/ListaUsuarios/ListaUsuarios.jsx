@@ -16,7 +16,7 @@ const ListaUsuarios = () => {
   const getUsuarios = async () => {
     try {
       await axios
-        .get(`http://localhost:5002/api/usuario`, {
+        .get(`https://movie-pop-back.herokuapp.com/api/usuario`, {
           headers: { token: usuario.accessToken },
         })
         .then((res) => setUsuarios(res.data));
@@ -75,7 +75,7 @@ const ListaUsuarios = () => {
   const editarUsuario = async (data) => {
     try {
       await axios.put(
-        `http://localhost:5002/api/usuario/${usuarioSelect._id}`,
+        `https://movie-pop-back.herokuapp.com/api/usuario/${usuarioSelect._id}`,
         data,
         {
           headers: { token: usuario.accessToken },
@@ -227,7 +227,7 @@ const ListaUsuarios = () => {
   const findUsuarioEditar = async (id) => {
     try {
       await axios
-        .get(`http://localhost:5002/api/usuario/find/${id}`)
+        .get(`https://movie-pop-back.herokuapp.com/api/usuario/find/${id}`)
         .then((res) => {
           setUsuarioSelect(res.data);
         });

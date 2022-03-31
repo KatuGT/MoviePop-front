@@ -18,7 +18,7 @@ const MiCuenta = () => {
       try {
         if (usuario !== null) {
           const datosUsuarios = await axios.get(
-            `http://localhost:5002/api/usuario/find/${usuario?._id}`
+            `https://movie-pop-back.herokuapp.com/api/usuario/find/${usuario?._id}`
           );
           setMiCuenta(datosUsuarios?.data);
         } else {
@@ -77,7 +77,7 @@ const MiCuenta = () => {
   const editarCuenta = async (data) => {
     try {
       await axios.put(
-        `http://localhost:5002/api/usuario/${usuario._id}`,
+        `https://movie-pop-back.herokuapp.com/api/usuario/${usuario._id}`,
         data,
         {
           headers: { token: usuario.accessToken },
