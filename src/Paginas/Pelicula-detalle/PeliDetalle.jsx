@@ -25,7 +25,6 @@ const PeliDetalle = () => {
     getPelicula();
   }, [id]);
 
-  const [misFavoritosID, setMisFavoritosID] = useState([]);
   const [isChecked, setIsChecked] = useState();
   useEffect(() => {
     async function getFavoritos() {
@@ -34,22 +33,18 @@ const PeliDetalle = () => {
           const datosUsuarios = await axios.get(
             `https://movie-pop-back.herokuapp.com/api/usuario/find/${usuario?._id}`
           );
-          setMisFavoritosID(datosUsuarios?.data.favoritos);
           setIsChecked(datosUsuarios?.data.favoritos.includes(id))
-        } else {
-          setMisFavoritosID([]);
         }
       } catch (error) {
         console.log(error);
       }
     }
     getFavoritos();
-  },[]);
-
-  
+  },[id, usuario]);
 
 
-  //agregar a favoritos
+
+  //agregar a favoritos o
   async function agregarBorrarFav(idPelicula) {
         try {
       if (!isChecked ) {
