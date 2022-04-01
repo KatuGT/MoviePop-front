@@ -32,7 +32,7 @@ const PeliDetalle = () => {
       try {
         if (usuario !== null) {
           const datosUsuarios = await axios.get(
-            `http://localhost:5002/api/usuario/find/${usuario?._id}`
+            `https://movie-pop-back.herokuapp.com/api/usuario/find/${usuario?._id}`
           );
           setMisFavoritosID(datosUsuarios?.data.favoritos);
           setIsChecked(datosUsuarios?.data.favoritos.includes(id))
