@@ -2,13 +2,14 @@ import Navbar from "./../../Componentes/Navbar/Navbar";
 import "./Peliculas.css";
 import Card from "./../../Componentes/Cards/Card.jsx";
 import { useEffect, useState } from "react";
-import Axios from "axios";
+import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Cargando from "../../Imagenes/cargando.svg";
 
 const Peliculas = () => {
   const [peliculas, setPeliculas] = useState([]);
   const [pagina, setPagina] = useState(0);
+  const [hasMore, setHasMore] = useState(true)
 
   //Busqueda
   const [query, setQuery] = useState("");
@@ -18,7 +19,7 @@ const Peliculas = () => {
       const queryArray = query ? query.split(" ") : null;
 
       const newQuery = query ? queryArray.join("%20") : null;
-      Axios.get(
+      axios.get(
         !query
           ? `https://api.tvmaze.com/shows?page=${pagina}`
           : `https://api.tvmaze.com/search/shows?q=${newQuery}
@@ -26,6 +27,8 @@ const Peliculas = () => {
       ).then((res) => {
         if (!query) {
           setPeliculas((prevPeliculas) => prevPeliculas.concat(res.data));
+          setHasMore(res.data ? true : false) 
+          console.log(hasMore);         
         } else {
           const auxArray = res.data.map((pelicula) => {
             return pelicula.show;
@@ -56,7 +59,7 @@ const Peliculas = () => {
           dataLength={peliculas.length}
           className="contenedor-card"
           next={() => setPagina((prevPagina) => prevPagina + 1)}
-          hasMore={true}
+          hasMore={hasMore}
           loader={
             <img
               className="cargando-peliculas"

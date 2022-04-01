@@ -12,7 +12,7 @@ const PeliDetalle = () => {
   const { usuario } = useContext(AutContext);
 
   const [pelicula, setPelicula] = useState([]);
- 
+
   useEffect(() => {
     const getPelicula = async () => {
       try {
@@ -25,22 +25,44 @@ const PeliDetalle = () => {
     getPelicula();
   }, [id]);
 
-  
+  const [misFavoritosID, setMisFavoritosID] = useState([]);
   const [isChecked, setIsChecked] = useState();
+  useEffect(() => {
+    async function getFavoritos() {
+      try {
+        if (usuario !== null) {
+          const datosUsuarios = await axios.get(
+            `http://localhost:5002/api/usuario/find/${usuario?._id}`
+          );
+          setMisFavoritosID(datosUsuarios?.data.favoritos);
+          setIsChecked(datosUsuarios?.data.favoritos.includes(id))
+        } else {
+          setMisFavoritosID([]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getFavoritos();
+  },[]);
+
+  
+
 
   //agregar a favoritos
   async function agregarBorrarFav(idPelicula) {
-    try {
-      if (!isChecked) {
+        try {
+      if (!isChecked ) {
         await axios.post(
           `https://movie-pop-back.herokuapp.com/api/usuario/${usuario?._id}/addfavorito/${idPelicula}`
         );
+        
       } else {
         await axios.delete(
           `https://movie-pop-back.herokuapp.com/api/usuario/${usuario?._id}/borrarpelicula/${idPelicula}`
         );
       }
-      setIsChecked(!isChecked)
+      setIsChecked(!isChecked);
     } catch (error) {
       console.log();
     }
@@ -58,7 +80,7 @@ const PeliDetalle = () => {
             alt="Imagen de Plicula"
             className="imagen-pelicula-detalle"
           />
-         <Rating rating={pelicula?.rating?.average} />
+          <Rating rating={pelicula?.rating?.average} />
         </figure>
         <section className="contenedor-detalle">
           <h3 className="titulo-peli-detalle">{pelicula?.name}</h3>
@@ -119,7 +141,6 @@ const PeliDetalle = () => {
               </label>
             )}
           </div>
-          
         </section>
       </div>
     </>
